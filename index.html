@@ -214,6 +214,7 @@ h2 span{color:var(--accent);}
 .team-inner{max-width:1200px;margin:0 auto;}
 .team-header{margin-bottom:4rem;}
 .team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
+.team-grid .team-card:last-child:nth-child(3n+1){grid-column:1 / span 1;}
 .team-card{border:1px solid var(--border);padding:2rem;transition:border-color .3s;background:#e8ecdc;}
 .team-card:hover{border-color:rgba(26,58,107,.4);}
 .team-initials{width:56px;height:56px;border:1px solid var(--silver);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.1em;color:var(--silver);margin-bottom:1.2rem;}
@@ -642,8 +643,9 @@ footer{background:var(--navy);border-top:1px solid var(--border);padding:3rem 4r
       <div class="team-card reveal reveal-delay-1"><div class="team-initials">JU</div><div class="team-name">Ju</div><div class="team-role">Chief Recruiting Officer & Co-Founder</div><p class="team-desc">Co-leads company direction, partnerships, and recruiting oversight. Sets the vision and approves all program decisions.</p></div>
       <div class="team-card reveal reveal-delay-2"><div class="team-initials">SP</div><div class="team-name">Spencer</div><div class="team-role">Director of Operations & Co-Founder</div><p class="team-desc">Manages athlete data, tracking systems, and performance metrics. Ensures no athlete falls through the cracks.</p></div>
       <div class="team-card reveal reveal-delay-1"><div class="team-initials">CT</div><div class="team-name">Courtney</div><div class="team-role">Director of PR & Athlete Media</div><p class="team-desc">Former D1 player delivering weekly PR seminars, NIL education, personal branding, and 1-on-1 sessions for Elite members.</p></div>
-      <div class="team-card reveal reveal-delay-2"><div class="team-initials">CG</div><div class="team-name">Craig</div><div class="team-role">DMV Regional Director</div><p class="team-desc">DMV region lead and director of family relations. Identifies under-the-radar talent and builds local school pipelines.</p></div>
-      <div class="team-card reveal reveal-delay-3"><div class="team-initials">JJ</div><div class="team-name">JJ & Tae</div><div class="team-role">Indiana / Kentucky Regional Directors</div><p class="team-desc">Regional recruiting consultants identifying talent and building relationships with HS and AAU programs across the Midwest.</p></div>
+      <div class="team-card reveal reveal-delay-2"><div class="team-initials">CG</div><div class="team-name">Craig</div><div class="team-role">Regional Director</div><p class="team-desc">Director of family relations. Identifies under-the-radar talent and builds relationships with local school programs and coaches.</p></div>
+      <div class="team-card reveal reveal-delay-3"><div class="team-initials">JR</div><div class="team-name">Jerome</div><div class="team-role">Regional Director</div><p class="team-desc">Regional recruiting consultant identifying talent and building relationships with HS and AAU programs in his area.</p></div>
+      <div class="team-card reveal reveal-delay-4"><div class="team-initials">TR</div><div class="team-name">Taeron</div><div class="team-role">Regional Director</div><p class="team-desc">Regional recruiting consultant identifying talent and building relationships with HS and AAU programs in his area.</p></div>
     </div>
   </div>
 </section>
@@ -812,8 +814,8 @@ footer{background:var(--navy);border-top:1px solid var(--border);padding:3rem 4r
       <h2 class="reveal reveal-delay-1">QUESTIONS<br><span>ANSWERED</span></h2>
     </div>
     <div class="faq-item reveal">
-      <button class="faq-question"><span class="faq-question-text">How is Courtside Connections different from NCSA or other services?</span><span class="faq-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
-      <div class="faq-answer"><div class="faq-answer-inner">Most services send mass emails to hundreds of coaches and call it recruiting. We do the opposite — we evaluate your athlete first, identify programs that are a genuine fit, and make targeted, personal outreach. We also provide mentorship, PR training, and consistent check-ins. We're smaller by design because that's what actually gets results.</div></div>
+      <button class="faq-question"><span class="faq-question-text">How is Courtside Connections different from other recruiting services?</span><span class="faq-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
+      <div class="faq-answer"><div class="faq-answer-inner">Most services send mass emails to hundreds of coaches and call it recruiting. We do the opposite — we evaluate your athlete first, identify programs that are a genuine fit, and make targeted, personal outreach. We also provide mentorship, PR training, and consistent check-ins. We are smaller by design because that is what actually gets results.</div></div>
     </div>
     <div class="faq-item reveal">
       <button class="faq-question"><span class="faq-question-text">Do you guarantee a scholarship or offer?</span><span class="faq-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
@@ -821,7 +823,7 @@ footer{background:var(--navy);border-top:1px solid var(--border);padding:3rem 4r
     </div>
     <div class="faq-item reveal">
       <button class="faq-question"><span class="faq-question-text">What if my kid doesn't get an offer during the program?</span><span class="faq-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
-      <div class="faq-answer"><div class="faq-answer-inner">Recruiting timelines vary significantly. If the program ends without a commitment, we provide a full debrief — what happened, what we'd do differently, and what next steps look like including post-grad options, JUCO pathways, and walk-on opportunities. We don't disappear when things get hard.</div></div>
+      <div class="faq-answer"><div class="faq-answer-inner">Recruiting timelines vary significantly. If the program ends without a commitment, we provide a full debrief — what happened, what we'd do differently, and what next steps look like including student assistant and manager opportunities, JUCO pathways, and walk-on options. We don't disappear when things get hard.</div></div>
     </div>
     <div class="faq-item reveal">
       <button class="faq-question"><span class="faq-question-text">What levels do you work with?</span><span class="faq-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
@@ -829,7 +831,7 @@ footer{background:var(--navy);border-top:1px solid var(--border);padding:3rem 4r
     </div>
     <div class="faq-item reveal">
       <button class="faq-question"><span class="faq-question-text">When should we start the process?</span><span class="faq-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
-      <div class="faq-answer"><div class="faq-answer-inner">Ideally sophomore or junior year — that gives us the most runway to build relationships before the key decision windows. However, we have helped seniors and post-grads find opportunities. It is never too early and rarely too late. Start with a free evaluation and we will tell you exactly where your athlete stands today.</div></div>
+      <div class="faq-answer"><div class="faq-answer-inner">As early as 7th grade. The earlier we start, the more runway we have to build relationships and put your athlete in front of the right coaches. We have helped athletes at every stage — middle school through senior year. It is never too early to start building your pathway.</div></div>
     </div>
   </div>
 </section>
