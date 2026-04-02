@@ -70,6 +70,8 @@ nav.scrolled .nav-burger span{background:var(--navy);}
 .mobile-menu.open{display:flex;}
 .mobile-menu a{font-family:'Bebas Neue',sans-serif;font-size:2.4rem;letter-spacing:.08em;color:var(--cream);text-decoration:none;transition:color .2s;}
 .mobile-menu a:hover{color:var(--accent);}
+.mobile-menu-close{position:absolute;top:1.5rem;right:1.5rem;background:none;border:1px solid rgba(245,248,232,.3);color:var(--cream);width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.4rem;transition:background .2s,border-color .2s;}
+.mobile-menu-close:hover{background:rgba(245,248,232,.1);border-color:rgba(245,248,232,.6);}
 
 /* HERO */
 .hero{min-height:100vh;display:flex;align-items:flex-end;padding:0 4rem 6rem;position:relative;overflow:hidden;}
@@ -436,6 +438,7 @@ footer{background:var(--navy);border-top:1px solid var(--border);padding:3rem 4r
 
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-menu-close" onclick="closeMobile()" aria-label="Close menu">✕</button>
   <a href="#why" onclick="closeMobile()">Why Us</a>
   <a href="#how" onclick="closeMobile()">Process</a>
   <a href="#packages" onclick="closeMobile()">Packages</a>
