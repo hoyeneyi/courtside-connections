@@ -41,6 +41,11 @@
 html{scroll-behavior:smooth;}
 body{background:var(--page-bg);color:var(--page-text);font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden;}
 
+/* FULL PAGE VIDEO */
+.page-video-wrap{position:fixed;inset:0;z-index:-1;pointer-events:none;}
+.page-video{width:100%;height:100%;object-fit:cover;display:block;opacity:.07;}
+.page-video-overlay{position:absolute;inset:0;background:var(--page-bg);opacity:.93;}
+
 @media(pointer:coarse){.cursor,.cursor-ring{display:none;}body{cursor:auto;}}
 @media(pointer:fine){body{cursor:none;}}
 .cursor{position:fixed;width:10px;height:10px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .3s,height .3s;opacity:0;}
@@ -190,6 +195,7 @@ h2 span{color:var(--accent);}
 .team-card{border:1px solid var(--border);padding:2rem;transition:border-color .3s;background:#e8ecdc;}
 .team-card:hover{border-color:rgba(26,58,107,.4);}
 .team-initials{width:56px;height:56px;border:1px solid var(--silver);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.1em;color:var(--silver);margin-bottom:1.2rem;}
+.team-photo{width:56px;height:56px;object-fit:cover;border-radius:0;display:none;margin-bottom:1.2rem;border:1px solid var(--border);}
 .team-name{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.06em;color:var(--navy);margin-bottom:.2rem;}
 .team-role{font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;}
 .team-desc{font-size:.8rem;color:var(--navy);opacity:.6;line-height:1.65;}
@@ -359,6 +365,14 @@ footer{background:var(--navy);border-top:1px solid var(--border);padding:3rem 4r
 
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
+
+<!-- FULL PAGE VIDEO BACKGROUND -->
+<div class="page-video-wrap">
+  <video class="page-video" autoplay muted loop playsinline preload="auto">
+    <source src="https://pub-46eb07043bde45b5bfaef6823f5f5def.r2.dev/REEL.mp4" type="video/mp4">
+  </video>
+  <div class="page-video-overlay"></div>
+</div>
 
 <a href="https://calendly.com/courtsideconnectionsnetwork/30min" target="_blank" class="float-btn" id="floatBtn">
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
@@ -563,30 +577,10 @@ footer{background:var(--navy);border-top:1px solid var(--border);padding:3rem 4r
       <div class="section-label reveal">Success Stories</div>
       <h2 class="reveal reveal-delay-1">ATHLETES &<br><span>FAMILIES SPEAK</span></h2>
     </div>
-    <div class="testimonials-grid">
-      <div class="testimonial-card reveal">
-        <span class="testimonial-quote-mark">"</span>
-        <p class="testimonial-text">Courtside Connections didn't just find me schools — they found me the right school. They were honest with me from day one, and that honesty is what got me to the next level.</p>
-        <div class="testimonial-divider"></div>
-        <div class="testimonial-name">Marcus T.</div>
-        <div class="testimonial-role">Guard · Committed D2 — Class of 2024</div>
-      </div>
-      <div class="testimonial-card reveal reveal-delay-1">
-        <span class="testimonial-quote-mark">"</span>
-        <p class="testimonial-text">As a parent I was completely lost in this process. The team walked us through every step, answered every question, and made sure my son had a real plan. Worth every dollar.</p>
-        <div class="testimonial-divider"></div>
-        <div class="testimonial-name">Denise W.</div>
-        <div class="testimonial-role">Parent of Elite Member</div>
-      </div>
-      <div class="testimonial-card reveal reveal-delay-2">
-        <span class="testimonial-quote-mark">"</span>
-        <p class="testimonial-text">I came in thinking I was a D1 player. They showed me where I really fit and helped me land at a school where I actually start and thrive. Best decision I ever made.</p>
-        <div class="testimonial-divider"></div>
-        <div class="testimonial-name">Jaylen R.</div>
-        <div class="testimonial-role">Forward · NAIA Commit — Class of 2025</div>
-      </div>
+    <div class="testimonials-grid" id="testimonialsGrid">
+      <!-- Loaded dynamically from R2 -->
     </div>
-    <p class="testimonials-note reveal reveal-delay-3">Testimonials are representative examples. Real client stories will be featured as the program grows.</p>
+    <p class="testimonials-note reveal reveal-delay-3" id="testimonialsNote"></p>
   </div>
 </section>
 
@@ -599,14 +593,14 @@ footer{background:var(--navy);border-top:1px solid var(--border);padding:3rem 4r
       <p class="section-body reveal reveal-delay-2">Every member of our team has been through the recruiting process. We are not a faceless platform — we are the people in your corner.</p>
     </div>
     <div class="team-grid">
-      <div class="team-card reveal"><div class="team-initials">KH</div><div class="team-name">Khyle</div><div class="team-role">Chief Recruiting Officer & Co-Founder</div><p class="team-desc">Leads recruiting strategy, athlete placement, college coach relationships, and 3rd-party recruiter partnerships.</p></div>
-      <div class="team-card reveal reveal-delay-1"><div class="team-initials">JU</div><div class="team-name">Justin</div><div class="team-role">Chief Recruiting Officer & Co-Founder</div><p class="team-desc">Co-leads company direction, partnerships, and recruiting oversight. Sets the vision and approves all program decisions.</p></div>
-      <div class="team-card reveal reveal-delay-2"><div class="team-initials">SP</div><div class="team-name">Spencer</div><div class="team-role">Director of Operations & Co-Founder</div><p class="team-desc">Manages athlete data, tracking systems, and performance metrics. Ensures no athlete falls through the cracks.</p></div>
-      <div class="team-card reveal reveal-delay-1"><div class="team-initials">CT</div><div class="team-name">Cortney</div><div class="team-role">Director of PR & Athlete Media</div><p class="team-desc">Former D1 player delivering weekly PR seminars, personal branding, and 1-on-1 sessions for Elite members.</p></div>
-      <div class="team-card reveal reveal-delay-2"><div class="team-initials">CG</div><div class="team-name">Craig</div><div class="team-role">Regional Director</div><p class="team-desc">Director of family relations. Identifies under-the-radar talent and builds relationships with local school programs and coaches.</p></div>
-      <div class="team-card reveal reveal-delay-3"><div class="team-initials">JR</div><div class="team-name">Jerome</div><div class="team-role">Regional Director</div><p class="team-desc">Regional recruiting consultant identifying talent and building relationships with HS and AAU programs in his area.</p></div>
-      <div class="team-card reveal reveal-delay-4"><div class="team-initials">AY</div><div class="team-name">Aysia</div><div class="team-role">Chief Finance Officer</div><p class="team-desc">Oversees all financial operations, revenue management, and ensures the business runs efficiently so the team can focus on serving athletes and families.</p></div>
-      <div class="team-card reveal reveal-delay-4"><div class="team-initials">TR</div><div class="team-name">Taeron</div><div class="team-role">Regional Director</div><p class="team-desc">Regional recruiting consultant identifying talent and building relationships with HS and AAU programs in his area.</p></div>
+      <div class="team-card reveal"><div class="team-initials" id="ti-khyle">KH</div><img class="team-photo" id="tp-khyle" src="https://pub-46eb07043bde45b5bfaef6823f5f5def.r2.dev/khyle.jpg" alt="Khyle" onload="showPhoto('khyle')" onerror="this.style.display='none'" /><div class="team-name">Khyle</div><div class="team-role">Chief Recruiting Officer & Co-Founder</div><p class="team-desc">Leads recruiting strategy, athlete placement, college coach relationships, and 3rd-party recruiter partnerships.</p></div>
+      <div class="team-card reveal reveal-delay-1"><div class="team-initials" id="ti-justin">JU</div><img class="team-photo" id="tp-justin" src="https://pub-46eb07043bde45b5bfaef6823f5f5def.r2.dev/justin.jpg" alt="Justin" onload="showPhoto('justin')" onerror="this.style.display='none'" /><div class="team-name">Justin</div><div class="team-role">Chief Recruiting Officer & Co-Founder</div><p class="team-desc">Co-leads company direction, partnerships, and recruiting oversight. Sets the vision and approves all program decisions.</p></div>
+      <div class="team-card reveal reveal-delay-2"><div class="team-initials" id="ti-spencer">SP</div><img class="team-photo" id="tp-spencer" src="https://pub-46eb07043bde45b5bfaef6823f5f5def.r2.dev/spencer.jpg" alt="Spencer" onload="showPhoto('spencer')" onerror="this.style.display='none'" /><div class="team-name">Spencer</div><div class="team-role">Director of Operations & Co-Founder</div><p class="team-desc">Manages athlete data, tracking systems, and performance metrics. Ensures no athlete falls through the cracks.</p></div>
+      <div class="team-card reveal reveal-delay-1"><div class="team-initials" id="ti-cortney">CT</div><img class="team-photo" id="tp-cortney" src="https://pub-46eb07043bde45b5bfaef6823f5f5def.r2.dev/cortney.jpg" alt="Cortney" onload="showPhoto('cortney')" onerror="this.style.display='none'" /><div class="team-name">Cortney</div><div class="team-role">Director of PR & Athlete Media</div><p class="team-desc">Former D1 player delivering weekly PR seminars, personal branding, and 1-on-1 sessions for Elite members.</p></div>
+      <div class="team-card reveal reveal-delay-2"><div class="team-initials" id="ti-craig">CG</div><img class="team-photo" id="tp-craig" src="https://pub-46eb07043bde45b5bfaef6823f5f5def.r2.dev/craig.jpg" alt="Craig" onload="showPhoto('craig')" onerror="this.style.display='none'" /><div class="team-name">Craig</div><div class="team-role">Regional Director</div><p class="team-desc">Director of family relations. Identifies under-the-radar talent and builds relationships with local school programs and coaches.</p></div>
+      <div class="team-card reveal reveal-delay-3"><div class="team-initials" id="ti-jerome">JR</div><img class="team-photo" id="tp-jerome" src="https://pub-46eb07043bde45b5bfaef6823f5f5def.r2.dev/jerome.jpg" alt="Jerome" onload="showPhoto('jerome')" onerror="this.style.display='none'" /><div class="team-name">Jerome</div><div class="team-role">Regional Director</div><p class="team-desc">Regional recruiting consultant identifying talent and building relationships with HS and AAU programs in his area.</p></div>
+      <div class="team-card reveal reveal-delay-4"><div class="team-initials" id="ti-aysia">AY</div><img class="team-photo" id="tp-aysia" src="https://pub-46eb07043bde45b5bfaef6823f5f5def.r2.dev/aysia.jpg" alt="Aysia" onload="showPhoto('aysia')" onerror="this.style.display='none'" /><div class="team-name">Aysia</div><div class="team-role">Chief Finance Officer</div><p class="team-desc">Oversees all financial operations, revenue management, and ensures the business runs efficiently so the team can focus on serving athletes and families.</p></div>
+      <div class="team-card reveal reveal-delay-4"><div class="team-initials" id="ti-taeron">TR</div><img class="team-photo" id="tp-taeron" src="https://pub-46eb07043bde45b5bfaef6823f5f5def.r2.dev/taeron.jpg" alt="Taeron" onload="showPhoto('taeron')" onerror="this.style.display='none'" /><div class="team-name">Taeron</div><div class="team-role">Regional Director</div><p class="team-desc">Regional recruiting consultant identifying talent and building relationships with HS and AAU programs in his area.</p></div>
     </div>
   </div>
 </section>
@@ -813,6 +807,45 @@ footer{background:var(--navy);border-top:1px solid var(--border);padding:3rem 4r
 </footer>
 
 <script>
+/* TESTIMONIALS — load from R2 */
+const PUBLIC_BASE = 'https://pub-46eb07043bde45b5bfaef6823f5f5def.r2.dev';
+const DEFAULT_TESTIMONIALS = [
+  { id:'t1', quote:"Courtside Connections didn't just find me schools — they found me the right school. They were honest with me from day one, and that honesty is what got me to the next level.", name:"Marcus T.", role:"Guard · Committed D2 — Class of 2024" },
+  { id:'t2', quote:"As a parent I was completely lost in this process. The team walked us through every step, answered every question, and made sure my son had a real plan. Worth every dollar.", name:"Denise W.", role:"Parent of Elite Member" },
+  { id:'t3', quote:"I came in thinking I was a D1 player. They showed me where I really fit and helped me land at a school where I actually start and thrive. Best decision I ever made.", name:"Jaylen R.", role:"Forward · NAIA Commit — Class of 2025" },
+];
+(async function loadTestimonials() {
+  let list;
+  try {
+    const res = await fetch(`${PUBLIC_BASE}/testimonials.json?t=${Date.now()}`);
+    list = res.ok ? await res.json() : DEFAULT_TESTIMONIALS;
+  } catch { list = DEFAULT_TESTIMONIALS; }
+  const grid = document.getElementById('testimonialsGrid');
+  const note = document.getElementById('testimonialsNote');
+  const delays = ['','reveal-delay-1','reveal-delay-2','reveal-delay-3','reveal-delay-4'];
+  grid.innerHTML = list.map((t,i) => `
+    <div class="testimonial-card reveal ${delays[i % delays.length]}">
+      <span class="testimonial-quote-mark">"</span>
+      <p class="testimonial-text">${t.quote}</p>
+      <div class="testimonial-divider"></div>
+      <div class="testimonial-name">${t.name}</div>
+      <div class="testimonial-role">${t.role}</div>
+    </div>
+  `).join('');
+  note.textContent = 'Testimonials are representative examples. Real client stories will be featured as the program grows.';
+  note.className = 'testimonials-note reveal reveal-delay-3';
+  grid.querySelectorAll('.reveal').forEach(el =>
+    new IntersectionObserver(entries => { entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }); },{threshold:.1}).observe(el)
+  );
+})();
+
+function showPhoto(key) {
+  const photo = document.getElementById('tp-' + key);
+  const init  = document.getElementById('ti-' + key);
+  if (photo) photo.style.display = 'block';
+  if (init)  init.style.display  = 'none';
+}
+
 if (window.matchMedia('(pointer:fine)').matches) {
   const cur = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
