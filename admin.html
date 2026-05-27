@@ -3,935 +3,401 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<!-- v3 -->
-<title>Courtside Connections — The 3% Pathway</title>
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){ dataLayer.push(arguments); }
-  gtag('js', new Date());
-  gtag('config', 'G-XXXXXXXXXX');
-</script>
-
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230a1128'/><text x='50%25' y='56%25' dominant-baseline='middle' text-anchor='middle' font-family='Georgia,serif' font-size='22' font-weight='bold' fill='%231a3a6b'>C</text></svg>" />
-
+<title>Courtside Connections — Admin</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
 <style>
 :root {
   --navy: #0a1128;
-  --navy-mid: #0f1730;
-  --navy-light: #182240;
   --accent: #1a3a6b;
   --accent-light: #2a5298;
-  --accent-dim: #0d2144;
   --cream: #f5f8e8;
-  --white: #ffffff;
-  --gray: #4a5a7a;
-  --silver: #6a7a9a;
   --border: rgba(26,58,107,0.2);
-  --page-bg: #f5f8e8;
-  --page-text: #0a1128;
 }
-
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
-body{background:var(--page-bg);color:var(--page-text);font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden;}
+body{background:#0d1420;color:var(--cream);font-family:'DM Sans',sans-serif;font-weight:300;min-height:100vh;}
 
-/* FULL PAGE VIDEO */
-.page-video-wrap{position:fixed;inset:0;z-index:-1;pointer-events:none;}
-.page-video{width:100%;height:100%;object-fit:cover;display:block;}
-.page-video-overlay{position:absolute;inset:0;background:rgba(10,17,40,.6);}
+#loginScreen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:2rem;}
+.login-box{background:#111827;border:1px solid var(--border);padding:3rem;width:100%;max-width:420px;}
+.login-logo{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:.12em;color:var(--cream);margin-bottom:.3rem;}
+.login-sub{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(245,248,232,.4);margin-bottom:2.5rem;}
+.login-label{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(245,248,232,.5);display:block;margin-bottom:.5rem;}
+.login-input{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--cream);padding:.9rem 1rem;font-family:'DM Sans',sans-serif;font-size:.9rem;outline:none;transition:border-color .2s;}
+.login-input:focus{border-color:rgba(26,58,107,.6);}
+.login-btn{width:100%;background:var(--accent);color:var(--cream);border:none;padding:1rem;font-family:'DM Sans',sans-serif;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;font-weight:500;cursor:pointer;margin-top:1.2rem;transition:background .2s;}
+.login-btn:hover{background:var(--accent-light);}
+.login-error{color:#f87171;font-size:.78rem;margin-top:.8rem;display:none;}
 
-/* Hero sits on top of the fixed video — needs dark overlay of its own */
-.hero{background:transparent;}
-.hero-grid{position:absolute;inset:0;z-index:1;background-image:linear-gradient(rgba(26,58,107,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(26,58,107,.06) 1px,transparent 1px);background-size:80px 80px;mask-image:linear-gradient(to bottom,transparent 0%,black 30%,black 70%,transparent 100%);}
+#adminScreen{display:none;padding:2rem 4rem;max-width:1200px;margin:0 auto;}
+.admin-header{display:flex;align-items:center;justify-content:space-between;padding:2rem 0;border-bottom:1px solid var(--border);margin-bottom:1rem;}
+.admin-logo{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.1em;color:var(--cream);}
+.admin-sub{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(245,248,232,.35);margin-top:.2rem;}
+.logout-btn{background:none;border:1px solid var(--border);color:rgba(245,248,232,.5);padding:.5rem 1.2rem;font-family:'DM Sans',sans-serif;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;transition:border-color .2s,color .2s;}
+.logout-btn:hover{border-color:rgba(245,248,232,.4);color:var(--cream);}
 
-/* All page sections get a semi-transparent bg so video peeks through */
-.problem{background:rgba(245,248,232,.82);}
-.how{background:rgba(10,17,40,.85);}
-.packages{background:rgba(245,248,232,.82);}
-.testimonials{background:rgba(15,23,48,.85);}
-.team{background:rgba(245,248,232,.82);}
-.difference{background:rgba(245,248,232,.82);}
-.guarantee{background:rgba(10,17,40,.85);}
-.book{background:rgba(245,248,232,.82);}
-.cta-section{background:rgba(245,248,232,.82);}
-.faq{background:rgba(232,236,220,.82);}
-.marquee-wrap{background:rgba(245,248,232,.82);}
-footer{background:rgba(10,17,40,.92);}
+.tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:3rem;}
+.tab-btn{background:none;border:none;border-bottom:2px solid transparent;color:rgba(245,248,232,.4);font-family:'DM Sans',sans-serif;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;padding:.9rem 2rem;cursor:pointer;transition:color .2s,border-color .2s;margin-bottom:-1px;}
+.tab-btn.active{color:var(--cream);border-bottom-color:var(--accent-light);}
+.tab-btn:hover{color:var(--cream);}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
 
-/* Problem card and solution card need transparency too */
-.problem-card{background:rgba(232,236,220,.7);}
-.solution-card{background:rgba(26,58,107,.08);}
-.team-card{background:rgba(232,236,220,.7);}
-.faq{background:rgba(232,236,220,.82);}
-.form-wrap{background:rgba(232,236,220,.75);}
-.calendly-embed{background:rgba(232,236,220,.75);}
-.package-card{background:rgba(255,255,255,.75);}
-.package-card.featured{background:linear-gradient(145deg,rgba(26,58,107,.88) 0%,rgba(10,17,40,.92) 100%);}
-.testimonial-card{background:rgba(24,34,64,.85);}
-.diff-right{background:rgba(10,17,40,.88);}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.08em;color:var(--cream);margin-bottom:.4rem;}
+.section-desc{font-size:.78rem;color:rgba(245,248,232,.4);margin-bottom:2rem;line-height:1.6;}
 
-@media(pointer:coarse){.cursor,.cursor-ring{display:none;}body{cursor:auto;}}
-@media(pointer:fine){body{cursor:none;}}
-.cursor{position:fixed;width:10px;height:10px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .3s,height .3s;opacity:0;}
-.cursor.active{opacity:1;}
-.cursor-ring{position:fixed;width:36px;height:36px;border:1px solid rgba(26,58,107,.3);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .3s,height .3s;opacity:0;}
+.instructions{background:#111827;border:1px solid var(--border);padding:1.8rem;margin-bottom:2.5rem;}
+.instructions h3{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.08em;color:var(--cream);margin-bottom:.8rem;}
+.instructions ol{padding-left:1.2rem;}
+.instructions li{font-size:.8rem;color:rgba(245,248,232,.55);line-height:1.9;}
+.instructions li strong{color:var(--cream);font-weight:500;}
+.tip{background:rgba(26,58,107,.15);border-left:2px solid var(--accent);padding:.7rem 1rem;margin-top:1rem;font-size:.75rem;color:rgba(245,248,232,.5);line-height:1.6;}
 
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.4rem 4rem;display:flex;align-items:center;justify-content:space-between;background:transparent;transition:background .3s,box-shadow .3s;}
-nav.scrolled{background:rgba(245,248,232,.97);box-shadow:0 1px 0 rgba(10,17,40,.1);}
-nav.scrolled .nav-logo{color:var(--accent);}
-nav.scrolled .nav-links a{color:var(--navy);opacity:.75;}
-nav.scrolled .nav-links a:hover{color:var(--accent);opacity:1;}
-nav.scrolled .nav-burger span{background:var(--navy);}
-.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.12em;color:var(--cream);text-decoration:none;flex-shrink:0;}
-.nav-links{display:flex;gap:2.5rem;list-style:none;}
-.nav-links a{font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;color:var(--cream);text-decoration:none;opacity:.8;transition:opacity .2s,color .2s;}
-.nav-links a:hover{opacity:1;color:var(--cream);}
-.nav-burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px;z-index:200;}
-.nav-burger span{display:block;width:24px;height:2px;background:var(--cream);transition:transform .3s,opacity .3s;}
-.nav-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
-.nav-burger.open span:nth-child(2){opacity:0;}
-.nav-burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
-.mobile-menu{display:none;position:fixed;inset:0;background:rgba(10,17,40,.97);z-index:150;flex-direction:column;align-items:center;justify-content:center;gap:2.2rem;}
-.mobile-menu.open{display:flex;}
-.mobile-menu a{font-family:'Bebas Neue',sans-serif;font-size:2.4rem;letter-spacing:.08em;color:var(--cream);text-decoration:none;transition:color .2s;}
-.mobile-menu a:hover{color:var(--accent);}
-.mobile-menu-close{position:absolute;top:1.5rem;right:1.5rem;background:none;border:1px solid rgba(245,248,232,.3);color:var(--cream);width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.4rem;transition:background .2s,border-color .2s;}
-.mobile-menu-close:hover{background:rgba(245,248,232,.1);border-color:rgba(245,248,232,.6);}
+.team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;margin-bottom:4rem;}
+.member-card{background:#111827;border:1px solid var(--border);padding:1.5rem;transition:border-color .3s;}
+.member-card:hover{border-color:rgba(26,58,107,.5);}
+.member-photo{width:100%;aspect-ratio:1;background:#1a2438;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin-bottom:1rem;overflow:hidden;}
+.member-photo img{width:100%;height:100%;object-fit:cover;display:none;}
+.member-initials-display{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:.1em;color:rgba(245,248,232,.2);}
+.member-name{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.06em;color:var(--cream);margin-bottom:.2rem;}
+.member-role{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(26,58,107,.9);margin-bottom:1rem;line-height:1.4;}
+.upload-btn{width:100%;background:rgba(26,58,107,.2);border:1px dashed rgba(26,58,107,.5);color:rgba(245,248,232,.6);padding:.7rem;font-family:'DM Sans',sans-serif;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;transition:background .2s,border-color .2s,color .2s;position:relative;display:block;text-align:center;}
+.upload-btn:hover{background:rgba(26,58,107,.35);border-color:rgba(26,58,107,.8);color:var(--cream);}
+.upload-btn input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.progress-wrap{width:100%;height:2px;background:rgba(255,255,255,.06);margin-top:.6rem;display:none;}
+.progress-bar{height:100%;background:var(--accent-light);width:0%;transition:width .3s;}
+.member-status{font-size:.65rem;margin-top:.5rem;text-align:center;min-height:1rem;}
+.member-status.uploading{color:rgba(245,248,232,.45);}
+.member-status.success{color:#4ade80;}
+.member-status.error{color:#f87171;}
 
-.hero{min-height:100vh;display:flex;align-items:flex-end;padding:0 4rem 6rem;position:relative;overflow:hidden;background:transparent;}
-.hero-grid{position:absolute;inset:0;z-index:1;background-image:linear-gradient(rgba(26,58,107,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(26,58,107,.04) 1px,transparent 1px);background-size:80px 80px;mask-image:linear-gradient(to bottom,transparent 0%,black 30%,black 70%,transparent 100%);}
-.hero-accent{position:absolute;top:18%;right:8%;width:420px;height:420px;border:1px solid rgba(26,58,107,.18);border-radius:50%;animation:spin 30s linear infinite;z-index:2;}
-.hero-accent::before{content:'';position:absolute;inset:30px;border:1px solid rgba(26,58,107,.07);border-radius:50%;}
-.hero-accent::after{content:'';position:absolute;top:50%;left:-2px;width:5px;height:5px;background:var(--accent);border-radius:50%;transform:translateY(-50%);box-shadow:0 0 14px rgba(26,58,107,.6);}
-@keyframes spin{to{transform:rotate(360deg);}}
-.hero-stat{position:absolute;top:32%;right:10%;text-align:center;animation:fadeUp 1.2s .8s both;z-index:3;}
-.hero-stat-num{font-family:'Bebas Neue',sans-serif;font-size:5rem;color:var(--cream);line-height:1;display:block;}
-.hero-stat-label{font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(245,248,232,.65);display:block;margin-top:.3rem;}
-.hero-content{position:relative;z-index:3;max-width:780px;}
-.hero-eyebrow{font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:var(--cream);margin-bottom:1.5rem;display:flex;align-items:center;gap:1rem;animation:fadeUp .9s .1s both;}
-.hero-eyebrow::before{content:'';display:block;width:40px;height:1px;background:var(--accent);}
-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.8rem,10vw,9rem);line-height:.92;letter-spacing:.02em;color:var(--cream);animation:fadeUp .9s .2s both;}
-h1 em{font-style:normal;color:var(--cream);}
-.hero-sub{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-style:italic;color:rgba(245,248,232,.75);margin:1.8rem 0 2.5rem;max-width:480px;line-height:1.7;animation:fadeUp .9s .35s both;}
-.hero-cta{display:flex;gap:1.2rem;flex-wrap:wrap;animation:fadeUp .9s .5s both;}
-@keyframes fadeUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
+.testimonial-list{display:flex;flex-direction:column;gap:1rem;margin-bottom:2.5rem;}
+.testimonial-item{background:#111827;border:1px solid var(--border);padding:1.5rem;display:flex;gap:1.5rem;align-items:flex-start;}
+.testimonial-body{flex:1;}
+.testimonial-quote-preview{font-size:.88rem;color:rgba(245,248,232,.75);line-height:1.65;margin-bottom:.5rem;font-style:italic;}
+.testimonial-meta{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(245,248,232,.35);}
+.testimonial-meta span{color:var(--accent-light);margin-right:.5rem;}
+.del-btn{background:none;border:1px solid rgba(248,113,113,.25);color:#f87171;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;font-size:1rem;transition:background .2s,border-color .2s;}
+.del-btn:hover{background:rgba(248,113,113,.1);border-color:rgba(248,113,113,.5);}
+.empty-state{text-align:center;padding:3rem;color:rgba(245,248,232,.25);font-size:.85rem;border:1px dashed var(--border);}
 
-.btn-primary{background:var(--accent);color:var(--white);padding:1rem 2.5rem;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;font-weight:500;text-decoration:none;border:none;cursor:pointer;transition:background .2s,transform .2s,box-shadow .2s;display:inline-block;}
-.btn-primary:hover{background:var(--accent-light);transform:translateY(-2px);box-shadow:0 8px 32px rgba(26,58,107,.35);}
-.btn-outline{border:1px solid rgba(245,248,232,.5);color:var(--cream);padding:1rem 2.5rem;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;font-weight:400;text-decoration:none;transition:border-color .2s,color .2s,transform .2s;display:inline-block;}
-.btn-outline:hover{border-color:var(--cream);color:var(--cream);transform:translateY(-2px);}
-
-.marquee-wrap{border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;padding:1rem 0;background:rgba(26,58,107,.03);}
-.marquee-track{display:flex;width:max-content;animation:marquee 28s linear infinite;}
-.marquee-item{display:flex;align-items:center;gap:1.5rem;padding:0 2rem;font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:var(--navy);opacity:.5;white-space:nowrap;}
-.marquee-dot{width:4px;height:4px;background:var(--accent);border-radius:50%;flex-shrink:0;}
-@keyframes marquee{to{transform:translateX(-50%);}}
-
-section{padding:7rem 4rem;}
-.section-label{font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;display:flex;align-items:center;gap:1rem;}
-.section-label::before{content:'';display:block;width:30px;height:1px;background:var(--accent);}
-h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.8rem,6vw,5.5rem);line-height:.95;letter-spacing:.02em;color:var(--navy);margin-bottom:1rem;}
-h2 span{color:var(--accent);}
-
-.how h2,.testimonials h2,.guarantee h2,.guarantee h2 span,.hero h2{color:var(--cream);}
-.how h2 span,.testimonials h2 span{color:var(--cream);}
-
-.package-card.featured .package-name,.package-card.featured .package-price,.package-card.featured .package-tier,.package-card.featured .package-cta-note,.package-card.featured .package-best,.package-card.featured .package-installment,.package-card.featured .package-features li{color:rgba(245,248,232,.85);}
-.package-card.featured .package-features li::before{color:var(--cream);}
-.package-card.featured .package-features li{border-bottom:1px solid rgba(245,248,232,.08);}
-.package-card.featured .package-best{border-bottom:1px solid rgba(245,248,232,.12);}
-.package-card.featured .package-cta-note{border:1px solid rgba(245,248,232,.2);color:rgba(245,248,232,.7);}
-.package-card.featured .package-price span{color:rgba(245,248,232,.55);}
-
-.diff-right .diff-quote{color:var(--cream);}
-.diff-right .diff-quote-attr{color:rgba(245,248,232,.6);}
-
-.how .section-label,.testimonials .section-label,.guarantee .section-label{color:rgba(245,248,232,.6);}
-.how .section-label::before,.testimonials .section-label::before,.guarantee .section-label::before{background:rgba(245,248,232,.4);}
-
-.testimonial-text{color:rgba(245,248,232,.92);}
-.testimonial-name{color:var(--cream);}
-.testimonials-note{color:rgba(245,248,232,.4);}
-.section-body{font-family:'Cormorant Garamond',serif;font-size:1.15rem;line-height:1.8;color:var(--navy);opacity:.65;max-width:560px;}
-
-.problem{background:rgba(245,248,232,.82);}
-.problem-inner{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;max-width:1200px;margin:0 auto;}
-.problem-card{background:rgba(232,236,220,.7);border:1px solid var(--border);padding:1.4rem 1.6rem;margin-bottom:.8rem;display:flex;align-items:flex-start;gap:.8rem;}
-.problem-card-x{color:rgba(26,58,107,.45);font-size:1rem;flex-shrink:0;margin-top:.05rem;}
-.problem-card p{font-size:.88rem;line-height:1.6;color:var(--navy);opacity:.7;}
-.solution-card{background:linear-gradient(135deg,rgba(26,58,107,.08),rgba(26,58,107,.02));border:1px solid rgba(26,58,107,.3);padding:1.8rem;margin-top:1.2rem;}
-.solution-card-label{font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin-bottom:.8rem;opacity:1;}
-.solution-card p{font-size:.88rem;line-height:1.7;color:var(--navy);}
-
-.how{background:linear-gradient(180deg,rgba(10,17,40,.85) 0%,rgba(15,23,48,.85) 100%);}
-.how-inner{max-width:1200px;margin:0 auto;}
-.how-header{margin-bottom:5rem;}
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;}
-.steps::before{content:'';position:absolute;top:2.5rem;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--accent-dim),var(--accent),var(--accent-dim),transparent);}
-.step{padding:0 2rem 0 0;}
-.step-num{font-family:'Bebas Neue',sans-serif;font-size:5rem;color:rgba(245,248,232,.07);line-height:1;margin-bottom:-1rem;}
-.step-dot{width:10px;height:10px;background:var(--cream);border-radius:50%;margin-bottom:1.5rem;box-shadow:0 0 12px rgba(245,248,232,.4);position:relative;z-index:1;}
-.step-title{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.08em;color:var(--cream);margin-bottom:.8rem;opacity:1;}
-.step-desc{font-size:.82rem;line-height:1.7;color:rgba(245,248,232,.8);}
-
-.packages{background:rgba(245,248,232,.82);position:relative;overflow:hidden;}
-.packages::before{content:'';position:absolute;top:-200px;right:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(26,58,107,.05) 0%,transparent 70%);pointer-events:none;}
-.packages-inner{max-width:1200px;margin:0 auto;}
-.packages-header{margin-bottom:4rem;}
-/* 3-column grid for 3 packages */
-.packages-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;}
-.package-card{border:1px solid rgba(26,58,107,.15);padding:3rem;position:relative;transition:border-color .3s,transform .3s;background:#ffffff;}
-.package-card:hover{border-color:rgba(26,58,107,.5);transform:translateY(-4px);}
-.package-card.featured{border-color:var(--accent);background:linear-gradient(145deg,rgba(26,58,107,.9) 0%,var(--navy) 100%);}
-.package-badge{position:absolute;top:-1px;right:2.5rem;background:var(--cream);color:var(--navy);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;font-weight:500;padding:.4rem 1rem;}
-.package-tier{font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem;opacity:1;}
-.package-name{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;letter-spacing:.05em;color:var(--navy);margin-bottom:.5rem;opacity:1;}
-.package-best{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.9rem;color:var(--navy);opacity:.55;margin-bottom:2rem;padding-bottom:2rem;border-bottom:1px solid rgba(10,17,40,.1);}
-.package-price{font-family:'Bebas Neue',sans-serif;font-size:4rem;color:var(--navy);line-height:1;margin-bottom:.3rem;}
-.package-price span{font-family:'DM Sans',sans-serif;font-size:1rem;color:var(--gray);font-weight:300;}
-.package-installment{font-size:.75rem;color:var(--accent-dim);margin-bottom:2.5rem;}
-.package-cta-note{font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:2.5rem;padding:.8rem 1rem;border:1px solid rgba(26,58,107,.2);text-align:center;}
-.package-features{list-style:none;margin-bottom:2.5rem;}
-.package-features li{font-size:.83rem;color:var(--navy);padding:.65rem 0;border-bottom:1px solid rgba(10,17,40,.08);display:flex;align-items:flex-start;gap:.8rem;line-height:1.5;}
-.package-features li::before{content:'→';color:var(--accent);flex-shrink:0;margin-top:.05rem;}
-
-.testimonials{background:linear-gradient(180deg,rgba(15,23,48,.85) 0%,rgba(10,17,40,.85) 100%);}
-.testimonials-inner{max-width:1200px;margin:0 auto;}
-.testimonials-header{margin-bottom:4rem;}
-.testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
-.testimonial-card{background:#182240;border:1px solid rgba(245,248,232,.08);padding:2.2rem;transition:border-color .3s,transform .3s;}
-.testimonial-card:hover{border-color:rgba(26,58,107,.4);transform:translateY(-3px);}
-.testimonial-quote-mark{font-family:'Cormorant Garamond',serif;font-size:5rem;color:rgba(245,248,232,.2);line-height:.8;margin-bottom:.5rem;display:block;}
-.testimonial-text{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.05rem;color:var(--silver);line-height:1.75;margin-bottom:1.8rem;}
-.testimonial-divider{width:30px;height:1px;background:rgba(245,248,232,.3);margin-bottom:1rem;}
-.testimonial-name{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.1em;color:var(--cream);margin-bottom:.2rem;}
-.testimonial-role{font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(245,248,232,.45);}
-.testimonials-note{text-align:center;margin-top:3rem;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.9rem;color:var(--gray);opacity:.7;}
-
-.team{background:rgba(245,248,232,.82);}
-.team-inner{max-width:1200px;margin:0 auto;}
-.team-header{margin-bottom:4rem;}
-.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
-.team-grid .team-card:last-child:nth-child(3n+1){grid-column:1 / span 1;}
-.team-card{border:1px solid var(--border);padding:2rem;transition:border-color .3s;background:#e8ecdc;}
-.team-card:hover{border-color:rgba(26,58,107,.4);}
-.team-initials{width:56px;height:56px;border:1px solid var(--silver);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.1em;color:var(--silver);margin-bottom:1.2rem;}
-.team-photo{width:56px;height:56px;object-fit:cover;border-radius:0;display:none;margin-bottom:1.2rem;border:1px solid var(--border);}
-.team-name{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.06em;color:var(--navy);margin-bottom:.2rem;}
-.team-role{font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;}
-.team-desc{font-size:.8rem;color:var(--navy);opacity:.6;line-height:1.65;}
-
-.difference{background:rgba(245,248,232,.82);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
-.diff-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;}
-.diff-list{list-style:none;margin-top:3rem;}
-.diff-list li{display:flex;gap:1.5rem;padding:1.5rem 0;border-bottom:1px solid var(--border);align-items:flex-start;}
-.diff-list li:first-child{border-top:1px solid var(--border);}
-.diff-icon{width:40px;height:40px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--accent);flex-shrink:0;}
-.diff-list h4{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.08em;color:var(--navy);margin-bottom:.3rem;}
-.diff-list p{font-size:.8rem;color:var(--navy);opacity:.6;line-height:1.6;}
-.diff-right{padding:3rem;border:1px solid rgba(26,58,107,.15);background:rgba(10,17,40,.88);position:relative;}
-.diff-right::before{content:'"';font-family:'Cormorant Garamond',serif;font-size:12rem;color:rgba(245,248,232,.06);position:absolute;top:-2rem;left:1rem;line-height:1;}
-.diff-quote{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-style:italic;color:var(--cream);line-height:1.6;position:relative;z-index:1;}
-.diff-quote-attr{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-top:1.5rem;display:flex;align-items:center;gap:1rem;}
-.diff-quote-attr::before{content:'—';}
-
-.guarantee{background:linear-gradient(135deg,rgba(10,17,40,.85) 0%,rgba(15,23,48,.85) 100%);text-align:center;}
-.guarantee-inner{max-width:800px;margin:0 auto;}
-.guarantee-text{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-style:italic;color:rgba(245,248,232,.7);line-height:1.8;margin:2rem 0 3rem;}
-.guarantee-items{display:flex;gap:3rem;justify-content:center;flex-wrap:wrap;margin-top:3rem;}
-.guarantee-item{text-align:center;}
-.guarantee-item-num{font-family:'Bebas Neue',sans-serif;font-size:3.5rem;color:var(--cream);line-height:1;display:block;}
-.guarantee-item-label{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(245,248,232,.6);display:block;margin-top:.3rem;}
-
-.book{background:rgba(245,248,232,.82);}
-.book-inner{max-width:1000px;margin:0 auto;}
-.book-header{margin-bottom:3rem;}
-.book-layout{display:grid;grid-template-columns:1fr 1.6fr;gap:4rem;align-items:start;}
-.book-left p{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-style:italic;color:var(--navy);opacity:.7;line-height:1.8;margin-bottom:1.5rem;}
-.book-perks{list-style:none;margin-top:1.5rem;}
-.book-perks li{display:flex;align-items:center;gap:.8rem;font-size:.82rem;color:var(--navy);opacity:.7;padding:.5rem 0;}
-.book-perks li::before{content:'';width:6px;height:6px;background:var(--accent);border-radius:50%;flex-shrink:0;}
-.calendly-embed{background:rgba(232,236,220,.7);border:1px solid var(--border);padding:2.5rem;text-align:center;}
-.calendly-placeholder-title{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.08em;color:var(--navy);margin-bottom:.8rem;}
-.calendly-placeholder-sub{font-size:.82rem;color:var(--navy);opacity:.6;margin-bottom:2rem;line-height:1.6;}
-.calendly-btn{display:inline-block;background:var(--accent);color:var(--white);padding:1rem 2.5rem;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;font-weight:500;text-decoration:none;transition:background .2s,transform .2s;}
-.calendly-btn:hover{background:var(--accent-light);transform:translateY(-2px);}
-.calendly-note{font-size:.72rem;color:var(--gray);margin-top:1.2rem;font-style:italic;}
-
-.cta-section{background:rgba(245,248,232,.82);padding:8rem 4rem;position:relative;overflow:hidden;}
-.cta-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 70% at 50% 50%,rgba(26,58,107,.04) 0%,transparent 70%);}
-.cta-inner{max-width:800px;margin:0 auto;text-align:center;position:relative;z-index:1;}
-.cta-inner h2{font-size:clamp(3rem,7vw,6.5rem);margin-bottom:1.5rem;}
-.cta-inner>p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.2rem;color:var(--navy);opacity:.6;margin-bottom:3rem;line-height:1.7;}
-.form-wrap{background:rgba(232,236,220,.7);border:1px solid var(--border);padding:2.5rem;margin-top:3rem;text-align:left;}
+.add-form{background:#111827;border:1px solid var(--border);padding:2rem;}
+.add-form-title{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.08em;color:var(--cream);margin-bottom:1.5rem;}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;}
 .form-group{display:flex;flex-direction:column;gap:.4rem;}
-.form-group label{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent-dim);}
-.form-group input,.form-group textarea{background:rgba(255,255,255,.7);border:1px solid rgba(26,58,107,.2);color:var(--navy);padding:.85rem 1rem;font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:300;outline:none;transition:border-color .2s;width:100%;}
-.form-group input:focus,.form-group textarea:focus{border-color:rgba(26,58,107,.5);}
-.form-group textarea{resize:vertical;min-height:100px;}
+.form-group label{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(245,248,232,.4);}
+.form-group input,.form-group textarea{background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--cream);padding:.8rem 1rem;font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:300;outline:none;transition:border-color .2s;width:100%;}
+.form-group input:focus,.form-group textarea:focus{border-color:rgba(26,58,107,.6);}
+.form-group textarea{resize:vertical;min-height:90px;}
+.add-btn{background:var(--accent);color:var(--cream);border:none;padding:.9rem 2rem;font-family:'DM Sans',sans-serif;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;font-weight:500;cursor:pointer;margin-top:.5rem;transition:background .2s;}
+.add-btn:hover{background:var(--accent-light);}
+.save-status{font-size:.75rem;margin-top:.8rem;min-height:1.2rem;}
+.save-status.success{color:#4ade80;}
+.save-status.error{color:#f87171;}
 
-.custom-select{position:relative;width:100%;user-select:none;}
-.custom-select-trigger{background:rgba(255,255,255,.7);border:1px solid rgba(26,58,107,.2);color:var(--navy);padding:.85rem 1rem;font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:300;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:border-color .2s,color .2s;}
-.custom-select-trigger svg{flex-shrink:0;color:var(--gray);transition:transform .25s;}
-.custom-select.open .custom-select-trigger{border-color:rgba(26,58,107,.5);color:var(--cream);}
-.custom-select.open .custom-select-trigger svg{transform:rotate(180deg);}
-.custom-select-trigger.selected{color:var(--cream);}
-.custom-select-options{position:absolute;top:calc(100% + 4px);left:0;right:0;background:#f0f3e0;border:1px solid rgba(26,58,107,.3);z-index:200;display:none;}
-.custom-select.open .custom-select-options{display:block;}
-.custom-select-option{padding:.85rem 1rem;font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:300;color:var(--silver);cursor:pointer;transition:background .15s,color .15s;border-bottom:1px solid rgba(255,255,255,.04);}
-.custom-select-option:last-child{border-bottom:none;}
-.custom-select-option:hover{background:rgba(26,58,107,.12);color:var(--cream);}
-.custom-select-option.selected{background:rgba(26,58,107,.18);color:var(--accent);}
+.publish-bar{background:rgba(26,58,107,.15);border:1px solid rgba(26,58,107,.3);padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;gap:1rem;flex-wrap:wrap;}
+.publish-bar p{font-size:.78rem;color:rgba(245,248,232,.55);line-height:1.5;}
+.publish-bar p strong{color:var(--cream);}
+.publish-btn{background:var(--accent);color:var(--cream);border:none;padding:.7rem 1.6rem;font-family:'DM Sans',sans-serif;font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;font-weight:500;cursor:pointer;white-space:nowrap;transition:background .2s;}
+.publish-btn:hover{background:var(--accent-light);}
+.publish-btn:disabled{opacity:.5;cursor:not-allowed;}
 
-.form-submit{width:100%;background:var(--accent);color:var(--white);border:none;padding:1.1rem;font-family:'DM Sans',sans-serif;font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;font-weight:500;cursor:pointer;margin-top:1rem;transition:background .2s,transform .2s;}
-.form-submit:hover{background:var(--accent-light);transform:translateY(-2px);}
-.form-submit:disabled{opacity:.6;cursor:not-allowed;transform:none;}
-.form-note{font-size:.72rem;color:var(--gray);text-align:center;margin-top:1rem;font-style:italic;}
-.form-success{display:none;text-align:center;padding:3rem 1rem;}
-.form-success svg{color:var(--accent);margin-bottom:1.5rem;}
-.form-success h3{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:.08em;margin-bottom:.5rem;}
-.form-success p{font-size:.88rem;color:var(--gray);line-height:1.6;}
-
-.faq{background:rgba(232,236,220,.82);}
-.faq-inner{max-width:800px;margin:0 auto;}
-.faq-header{margin-bottom:3rem;}
-.faq-item{border-bottom:1px solid var(--border);}
-.faq-item:first-of-type{border-top:1px solid var(--border);}
-.faq-question{width:100%;background:none;border:none;padding:1.5rem 0;display:flex;align-items:center;justify-content:space-between;gap:1rem;cursor:pointer;text-align:left;}
-.faq-question-text{font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:.06em;color:var(--navy);transition:color .2s;}
-.faq-item.open .faq-question-text{color:var(--accent);}
-.faq-icon{width:28px;height:28px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--accent);transition:transform .3s,background .2s;}
-.faq-item.open .faq-icon{transform:rotate(45deg);background:rgba(26,58,107,.1);}
-.faq-answer{max-height:0;overflow:hidden;transition:max-height .4s ease;}
-.faq-item.open .faq-answer{max-height:300px;}
-.faq-answer-inner{padding:0 0 1.5rem;font-size:.88rem;color:var(--navy);opacity:.65;line-height:1.75;}
-
-footer{background:rgba(10,17,40,.92);border-top:1px solid var(--border);padding:3rem 4rem;}
-.footer-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:2rem;padding-bottom:2rem;border-bottom:1px solid var(--border);margin-bottom:2rem;}
-.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.1em;color:var(--cream);}
-.footer-tagline{font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--silver);margin-top:.2rem;}
-.footer-links{display:flex;gap:2rem;flex-wrap:wrap;}
-.footer-links a{font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--silver);text-decoration:none;transition:color .2s;}
-.footer-links a:hover{color:var(--accent);}
-.footer-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
-.footer-copy{font-size:.7rem;color:rgba(196,204,224,.5);}
-.footer-social{display:flex;gap:.8rem;}
-.footer-social a{width:34px;height:34px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--gray);text-decoration:none;transition:border-color .2s,color .2s;font-size:.68rem;font-weight:500;letter-spacing:.04em;}
-.footer-social a:hover{border-color:var(--accent);color:var(--accent);}
-
-.reveal{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease;}
-.reveal.visible{opacity:1;transform:translateY(0);}
-.reveal-delay-1{transition-delay:.1s;}
-.reveal-delay-2{transition-delay:.2s;}
-.reveal-delay-3{transition-delay:.3s;}
-.reveal-delay-4{transition-delay:.4s;}
-
-.float-btn{position:fixed;bottom:2rem;right:2rem;z-index:500;background:var(--accent);color:var(--white);text-decoration:none;padding:.85rem 1.6rem;font-family:'DM Sans',sans-serif;font-size:.68rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;display:flex;align-items:center;gap:.6rem;box-shadow:0 8px 32px rgba(26,58,107,.45);transition:background .2s,transform .2s,box-shadow .2s,opacity .4s;animation:floatIn .6s 1.2s both;}
-.float-btn:hover{background:var(--accent-light);transform:translateY(-3px);box-shadow:0 14px 40px rgba(26,58,107,.55);}
-.float-btn.hidden{opacity:0;pointer-events:none;transform:translateY(12px);}
-.float-btn svg{flex-shrink:0;}
-@keyframes floatIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
-@media(max-width:480px){.float-btn{bottom:1.2rem;right:1.2rem;padding:.8rem 1.2rem;font-size:.62rem;}}
-
-@media(max-width:1200px){
-  .packages-grid{grid-template-columns:1fr 1fr;}
-}
-@media(max-width:1024px){
-  .packages-grid{grid-template-columns:1fr;max-width:560px;}
-  .steps{grid-template-columns:1fr 1fr;gap:3rem;}
-  .steps::before{display:none;}
-  .diff-inner{grid-template-columns:1fr;gap:3rem;}
-  .book-layout{grid-template-columns:1fr;gap:2.5rem;}
-  .testimonials-grid{grid-template-columns:1fr 1fr;}
-}
-
-@media(max-width:768px){
-  nav{padding:1.2rem 1.5rem;}
-  .nav-links{display:none;}
-  .nav-burger{display:flex;}
-  .hero{padding:6rem 1.5rem 4rem;min-height:100svh;align-items:center;}
-  .hero-stat{display:none;}
-  .hero-accent{width:200px;height:200px;top:8%;right:-30px;opacity:.4;}
-  .hero-cta{flex-direction:column;}
-  .btn-primary,.btn-outline{width:100%;text-align:center;padding:.9rem 1.5rem;}
-  section{padding:4.5rem 1.5rem;}
-  .problem-inner{grid-template-columns:1fr;gap:2.5rem;}
-  .steps{grid-template-columns:1fr;gap:2rem;}
-  .step{padding:0;}
-  .packages-grid{grid-template-columns:1fr;}
-  .package-card{padding:2rem;}
-  .testimonials-grid{grid-template-columns:1fr;}
-  .team-grid{grid-template-columns:1fr 1fr;gap:1rem;}
-  .diff-inner{grid-template-columns:1fr;gap:2.5rem;}
-  .diff-right{padding:2rem;}
-  .guarantee-items{gap:1.5rem;}
-  .book-layout{grid-template-columns:1fr;}
-  .cta-section{padding:5rem 1.5rem;}
-  .form-wrap{padding:1.5rem;}
-  .form-row{grid-template-columns:1fr;}
-  footer{padding:2rem 1.5rem;}
-  .footer-top{flex-direction:column;align-items:flex-start;}
-  .footer-bottom{flex-direction:column;align-items:flex-start;}
-  .footer-links{gap:1.2rem;}
-}
-@media(max-width:480px){
-  .team-grid{grid-template-columns:1fr;}
-  .guarantee-items{flex-direction:column;align-items:center;}
-  .testimonials-grid{grid-template-columns:1fr;}
-}
+@media(max-width:900px){.team-grid{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:700px){#adminScreen{padding:1.5rem;}.team-grid{grid-template-columns:repeat(2,1fr);}.form-row{grid-template-columns:1fr;}}
+@media(max-width:400px){.team-grid{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
 
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
-
-<!-- FULL PAGE VIDEO BACKGROUND -->
-<div class="page-video-wrap">
-  <video class="page-video" autoplay muted loop playsinline preload="auto">
-    <source src="https://pub-46eb07043bde45b5bfaef6823f5f5def.r2.dev/REEL.mp4" type="video/mp4">
-  </video>
-  <div class="page-video-overlay"></div>
-</div>
-
-<a href="https://calendly.com/courtsideconnectionsnetwork/30min" target="_blank" class="float-btn" id="floatBtn">
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-  Book a Free Call
-</a>
-
-<div class="mobile-menu" id="mobileMenu">
-  <button class="mobile-menu-close" onclick="closeMobile()" aria-label="Close menu">✕</button>
-  <a href="#why" onclick="closeMobile()">Why Us</a>
-  <a href="#how" onclick="closeMobile()">Process</a>
-  <a href="#packages" onclick="closeMobile()">Packages</a>
-  <a href="#testimonials" onclick="closeMobile()">Stories</a>
-  <a href="#team" onclick="closeMobile()">Team</a>
-  <a href="#book" onclick="closeMobile()">Book a Call</a>
-  <a href="#contact" onclick="closeMobile()">Get Started</a>
-</div>
-
-<nav id="mainNav">
-  <a href="#" class="nav-logo">Courtside Connections</a>
-  <ul class="nav-links">
-    <li><a href="#why">Why Us</a></li>
-    <li><a href="#how">Process</a></li>
-    <li><a href="#packages">Packages</a></li>
-    <li><a href="#testimonials">Stories</a></li>
-    <li><a href="#team">Team</a></li>
-    <li><a href="#book">Book a Call</a></li>
-    <li><a href="#contact">Get Started</a></li>
-  </ul>
-  <button class="nav-burger" id="burger" aria-label="Open menu">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
-
-<!-- HERO -->
-<section class="hero" id="home">
-  <div class="hero-grid"></div>
-  <div class="hero-accent"></div>
-  <div class="hero-stat">
-    <span class="hero-stat-num">3%</span>
-    <span class="hero-stat-label">Make It to the<br>Next Level</span>
-  </div>
-  <div class="hero-content">
-    <div class="hero-eyebrow">The 3% Pathway</div>
-    <h1>YOUR PATH<br>TO THE <em>NEXT</em><br>LEVEL</h1>
-    <p class="hero-sub">Personalized recruiting guidance for student-athletes who deserve more than a mass email — built by players who lived it.</p>
-    <div class="hero-cta">
-      <a href="#contact" class="btn-primary">Get Free Evaluation</a>
-      <a href="#packages" class="btn-outline">View Packages</a>
-    </div>
-  </div>
-</section>
-
-<!-- MARQUEE -->
-<div class="marquee-wrap">
-  <div class="marquee-track">
-    <div class="marquee-item"><span class="marquee-dot"></span>NCAA D1 · D2 · D3</div>
-    <div class="marquee-item"><span class="marquee-dot"></span>NAIA</div>
-    <div class="marquee-item"><span class="marquee-dot"></span>JUCO</div>
-    <div class="marquee-item"><span class="marquee-dot"></span>NCCAA</div>
-    <div class="marquee-item"><span class="marquee-dot"></span>USCAA</div>
-    <div class="marquee-item"><span class="marquee-dot"></span>Honest Evaluation</div>
-    <div class="marquee-item"><span class="marquee-dot"></span>Fit-Based Strategy</div>
-    <div class="marquee-item"><span class="marquee-dot"></span>Hands-On Mentorship</div>
-    <div class="marquee-item"><span class="marquee-dot"></span>PR & Media Training</div>
-    <div class="marquee-item"><span class="marquee-dot"></span>NCAA D1 · D2 · D3</div>
-    <div class="marquee-item"><span class="marquee-dot"></span>NAIA</div>
-    <div class="marquee-item"><span class="marquee-dot"></span>JUCO</div>
-    <div class="marquee-item"><span class="marquee-dot"></span>NCCAA</div>
-    <div class="marquee-item"><span class="marquee-dot"></span>USCAA</div>
-    <div class="marquee-item"><span class="marquee-dot"></span>Honest Evaluation</div>
-    <div class="marquee-item"><span class="marquee-dot"></span>Fit-Based Strategy</div>
-    <div class="marquee-item"><span class="marquee-dot"></span>Hands-On Mentorship</div>
-    <div class="marquee-item"><span class="marquee-dot"></span>PR & Media Training</div>
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">Courtside Connections</div>
+    <div class="login-sub">Team Admin Portal</div>
+    <label class="login-label">Password</label>
+    <input class="login-input" type="password" id="passwordInput" placeholder="Enter admin password" onkeydown="if(event.key==='Enter')login()" />
+    <button class="login-btn" onclick="login()">Sign In</button>
+    <div class="login-error" id="loginError">Incorrect password. Try again.</div>
   </div>
 </div>
 
-<!-- PROBLEM -->
-<section class="problem" id="why">
-  <div class="problem-inner">
+<div id="adminScreen">
+  <div class="admin-header">
     <div>
-      <div class="section-label reveal">The Problem</div>
-      <h2 class="reveal reveal-delay-1">THE SYSTEM<br>IS <span>BROKEN</span></h2>
-      <p class="section-body reveal reveal-delay-2">Most recruiting services are quantity-driven machines that don't take time to understand your player's skill level, GPA, play style, or fit. College coaches get buried in mass emails with no real intention behind them.</p>
-      <p class="section-body reveal reveal-delay-3" style="margin-top:1rem;">We answer the questions parents and players have — and the ones they don't know to ask.</p>
+      <div class="admin-logo">Courtside Connections</div>
+      <div class="admin-sub">Site Admin Portal</div>
     </div>
-    <div class="reveal reveal-delay-2">
-      <div class="problem-card"><span class="problem-card-x">✕</span><p>Mass emails to coaches regardless of skill level, GPA, or program fit</p></div>
-      <div class="problem-card"><span class="problem-card-x">✕</span><p>Services checking boxes instead of building genuine relationships</p></div>
-      <div class="problem-card"><span class="problem-card-x">✕</span><p>No honest evaluation — just false hope and empty promises</p></div>
-      <div class="problem-card"><span class="problem-card-x">✕</span><p>Under-recruited players and smaller markets left behind entirely</p></div>
-      <div class="solution-card">
-        <div class="solution-card-label">Our Difference</div>
-        <p>We are the big brother or big sister you wish you had in the process. Former players who lived it — providing honest evaluations, strategic guidance, and genuine mentorship every step of the way.</p>
-      </div>
-    </div>
+    <button class="logout-btn" onclick="logout()">Sign Out</button>
   </div>
-</section>
 
-<!-- HOW IT WORKS -->
-<section class="how" id="how">
-  <div class="how-inner">
-    <div class="how-header">
-      <div class="section-label reveal">The 3% Pathway</div>
-      <h2 class="reveal reveal-delay-1">HOW IT <span>WORKS</span></h2>
-    </div>
-    <div class="steps">
-      <div class="step reveal"><div class="step-num">01</div><div class="step-dot"></div><div class="step-title">Intake & Evaluation</div><p class="step-desc">Film review, GPA assessment, location interests, and play style analysis. We evaluate where you can realistically thrive — not where you think you should be.</p></div>
-      <div class="step reveal reveal-delay-1"><div class="step-num">02</div><div class="step-dot"></div><div class="step-title">Strategy Session</div><p class="step-desc">A first meeting with athlete and parent. Honest evaluation, realistic pathways, clear expectations, and an assigned consultant — you leave with a real action plan.</p></div>
-      <div class="step reveal reveal-delay-2"><div class="step-num">03</div><div class="step-dot"></div><div class="step-title">Active Exposure</div><p class="step-desc">Film distributed to targeted coaches that match your evaluation. Personalized outreach — not mass blasts. Social media strategy and direct network introductions.</p></div>
-      <div class="step reveal reveal-delay-3"><div class="step-num">04</div><div class="step-dot"></div><div class="step-title">Ongoing Support</div><p class="step-desc">Weekly check-ins, monthly progress reviews, academic tracking, and communication coaching. We stay in the fight with you from intake to commitment.</p></div>
-    </div>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('headshots')">📷 Team Headshots</button>
+    <button class="tab-btn" onclick="switchTab('testimonials')">💬 Testimonials</button>
   </div>
-</section>
 
-<!-- PACKAGES -->
-<section class="packages" id="packages">
-  <div class="packages-inner">
-    <div class="packages-header">
-      <div class="section-label reveal">Membership</div>
-      <h2 class="reveal reveal-delay-1">CHOOSE YOUR <span>PATH</span></h2>
-      <p class="section-body reveal reveal-delay-2">All packages include an honest evaluation, assigned consultant, and mentorship from former players who know the process from the inside.</p>
+  <div class="tab-panel active" id="tab-headshots">
+    <div class="section-title">Team Headshots</div>
+    <div class="section-desc">Upload a photo for each team member. It goes live on the website instantly.</div>
+    <div class="instructions">
+      <h3>How To Upload</h3>
+      <ol>
+        <li>Find the team member's card below</li>
+        <li>Click <strong>"Upload Photo"</strong> on their card</li>
+        <li>Select a <strong>JPG or PNG</strong> — square crop, face centered works best</li>
+        <li>Wait for the green <strong>"Uploaded!"</strong> confirmation — done</li>
+      </ol>
+      <div class="tip">💡 Best results: square photos (1:1 ratio), at least 400×400px.</div>
     </div>
-    <div class="packages-grid">
-
-      <!-- FOUNDATION TIER -->
-      <div class="package-card reveal">
-        <div class="package-tier">Tier 1</div>
-        <div class="package-name">Foundation Tier</div>
-        <div class="package-best">Best for younger athletes and families looking to build early structure and get ahead of the recruiting process before it begins.</div>
-        <div class="package-cta-note">Contact us for pricing</div>
-        <ul class="package-features">
-          <li>Weekly training workout videos</li>
-          <li>Weekly college basketball education & basic tools</li>
-          <li>Recruiting education & guidance</li>
-          <li>Personalized recruiting roadmap</li>
-          <li>Camp & event guidance</li>
-          <li>Community access</li>
-          <li>Early recruiting structure for athletes & families</li>
-        </ul>
-        <a href="#contact" class="btn-outline" style="display:block;text-align:center;border-color:rgba(26,58,107,.4);color:var(--navy);">Get Started</a>
-      </div>
-
-      <!-- COURTSIDE PRO -->
-      <div class="package-card reveal reveal-delay-1">
-        <div class="package-tier">Tier 2</div>
-        <div class="package-name">Courtside Pro</div>
-        <div class="package-best">Best for freshmen through juniors building their foundation and families who want direction without a full exposure push.</div>
-        <div class="package-cta-note">Contact us for pricing</div>
-        <ul class="package-features">
-          <li>Personalized recruiting game plan</li>
-          <li>Honest player evaluation & positioning</li>
-          <li>Assigned consultant + Weekly Accountability</li>
-          <li>Film distributed to targeted coaches</li>
-          <li>Film distributed directly to college coaches</li>
-          <li>Access to PR seminars</li>
-          <li>Social media strategy for exposure</li>
-          <li>Coach outreach templates & guidance</li>
-          <li>Recruiting timeline by class year</li>
-          <li>Group Advisory sessions w/ former elite college athletes</li>
-          <li>Access to FAFSA guidance & support</li>
-        </ul>
-        <a href="#contact" class="btn-outline" style="display:block;text-align:center;border-color:rgba(26,58,107,.4);color:var(--navy);">Get Started</a>
-      </div>
-
-      <!-- COURTSIDE ELITE -->
-      <div class="package-card featured reveal reveal-delay-2">
-        <div class="package-badge">Most Popular</div>
-        <div class="package-tier">Tier 3</div>
-        <div class="package-name">Courtside Elite</div>
-        <div class="package-best">Best for juniors and above who want hands-on strategy, personalized outreach, and network-driven opportunities.</div>
-        <div class="package-cta-note">Contact us for pricing</div>
-        <ul class="package-features">
-          <li>Everything in Courtside Pro, plus:</li>
-          <li>2+ accountability checks per week + priority access</li>
-          <li>Third-party recruiter introductions & access</li>
-          <li>Accelerated, priority film distribution to college coaches</li>
-          <li>Broader, accelerated school search</li>
-          <li>Private 1-on-1 strategy sessions</li>
-          <li>Personalized school list & outreach planning</li>
-          <li>1-on-1 PR & media training</li>
-          <li>Position-specific insight & coaching</li>
-          <li>Help navigating offers & coach conversations</li>
-        </ul>
-        <a href="#contact" class="btn-primary" style="display:block;text-align:center;">Get Started</a>
-      </div>
-
-    </div>
+    <div class="team-grid" id="teamGrid"></div>
   </div>
-</section>
 
-<!-- TESTIMONIALS -->
-<section class="testimonials" id="testimonials">
-  <div class="testimonials-inner">
-    <div class="testimonials-header">
-      <div class="section-label reveal">Success Stories</div>
-      <h2 class="reveal reveal-delay-1">ATHLETES &<br><span>FAMILIES SPEAK</span></h2>
+  <div class="tab-panel" id="tab-testimonials">
+    <div class="section-title">Testimonials</div>
+    <div class="section-desc">Add or remove testimonials. Always click "Publish to Site" after making changes.</div>
+    <div class="publish-bar" id="publishBar" style="display:none;">
+      <p><strong>You have unpublished changes.</strong> Click "Publish to Site" to make them live.</p>
+      <button class="publish-btn" id="publishBtn" onclick="publishTestimonials()">Publish to Site</button>
     </div>
-    <div class="testimonials-grid" id="testimonialsGrid">
-      <!-- Loaded dynamically from R2 -->
-    </div>
-    <p class="testimonials-note reveal reveal-delay-3" id="testimonialsNote"></p>
-  </div>
-</section>
-
-<!-- TEAM -->
-<section class="team" id="team">
-  <div class="team-inner">
-    <div class="team-header">
-      <div class="section-label reveal">The Team</div>
-      <h2 class="reveal reveal-delay-1">BUILT BY PLAYERS,<br>FOR <span>PLAYERS</span></h2>
-      <p class="section-body reveal reveal-delay-2">Every member of our team has been through the recruiting process. We are not a faceless platform — we are the people in your corner.</p>
-    </div>
-    <div class="team-grid">
-      <div class="team-card reveal"><div class="team-initials" id="ti-khyle">KH</div><img class="team-photo" id="tp-khyle" src="https://pub-46eb07043bde45b5bfaef6823f5f5def.r2.dev/khyle.jpg" alt="Khyle" onload="showPhoto('khyle')" onerror="this.style.display='none'" /><div class="team-name">Khyle</div><div class="team-role">Chief Recruiting Officer & Co-Founder</div><p class="team-desc">Leads recruiting strategy, athlete placement, college coach relationships, and 3rd-party recruiter partnerships.</p></div>
-      <div class="team-card reveal reveal-delay-1"><div class="team-initials" id="ti-justin">JU</div><img class="team-photo" id="tp-justin" src="https://pub-46eb07043bde45b5bfaef6823f5f5def.r2.dev/justin.jpg" alt="Justin" onload="showPhoto('justin')" onerror="this.style.display='none'" /><div class="team-name">Justin</div><div class="team-role">Chief Recruiting Officer & Co-Founder</div><p class="team-desc">Co-leads company direction, partnerships, and recruiting oversight. Sets the vision and approves all program decisions.</p></div>
-      <div class="team-card reveal reveal-delay-2"><div class="team-initials" id="ti-spencer">SP</div><img class="team-photo" id="tp-spencer" src="https://pub-46eb07043bde45b5bfaef6823f5f5def.r2.dev/spencer.jpg" alt="Spencer" onload="showPhoto('spencer')" onerror="this.style.display='none'" /><div class="team-name">Spencer</div><div class="team-role">Director of Operations & Co-Founder</div><p class="team-desc">Manages athlete data, tracking systems, and performance metrics. Ensures no athlete falls through the cracks.</p></div>
-      <div class="team-card reveal reveal-delay-1"><div class="team-initials" id="ti-cortney">CT</div><img class="team-photo" id="tp-cortney" src="https://pub-46eb07043bde45b5bfaef6823f5f5def.r2.dev/cortney.jpg" alt="Cortney" onload="showPhoto('cortney')" onerror="this.style.display='none'" /><div class="team-name">Cortney</div><div class="team-role">Director of PR & Athlete Media</div><p class="team-desc">Former D1 player delivering weekly PR seminars, personal branding, and 1-on-1 sessions for Elite members.</p></div>
-      <div class="team-card reveal reveal-delay-2"><div class="team-initials" id="ti-craig">CG</div><img class="team-photo" id="tp-craig" src="https://pub-46eb07043bde45b5bfaef6823f5f5def.r2.dev/craig.jpg" alt="Craig" onload="showPhoto('craig')" onerror="this.style.display='none'" /><div class="team-name">Craig</div><div class="team-role">Regional Director</div><p class="team-desc">Director of family relations. Identifies under-the-radar talent and builds relationships with local school programs and coaches.</p></div>
-      <div class="team-card reveal reveal-delay-3"><div class="team-initials" id="ti-jerome">JR</div><img class="team-photo" id="tp-jerome" src="https://pub-46eb07043bde45b5bfaef6823f5f5def.r2.dev/jerome.jpg" alt="Jerome" onload="showPhoto('jerome')" onerror="this.style.display='none'" /><div class="team-name">Jerome</div><div class="team-role">Regional Director</div><p class="team-desc">Regional recruiting consultant identifying talent and building relationships with HS and AAU programs in his area.</p></div>
-      <div class="team-card reveal reveal-delay-4"><div class="team-initials" id="ti-aysia">AY</div><img class="team-photo" id="tp-aysia" src="https://pub-46eb07043bde45b5bfaef6823f5f5def.r2.dev/aysia.jpg" alt="Aysia" onload="showPhoto('aysia')" onerror="this.style.display='none'" /><div class="team-name">Aysia</div><div class="team-role">Chief Finance Officer</div><p class="team-desc">Oversees all financial operations, revenue management, and ensures the business runs efficiently so the team can focus on serving athletes and families.</p></div>
-      <div class="team-card reveal reveal-delay-4"><div class="team-initials" id="ti-taeron">TR</div><img class="team-photo" id="tp-taeron" src="https://pub-46eb07043bde45b5bfaef6823f5f5def.r2.dev/taeron.jpg" alt="Taeron" onload="showPhoto('taeron')" onerror="this.style.display='none'" /><div class="team-name">Taeron</div><div class="team-role">Regional Director</div><p class="team-desc">Regional recruiting consultant identifying talent and building relationships with HS and AAU programs in his area.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- DIFFERENCE -->
-<section class="difference" id="difference">
-  <div class="diff-inner">
-    <div>
-      <div class="section-label reveal">Why Us</div>
-      <h2 class="reveal reveal-delay-1">THE <span>COURTSIDE</span><br>DIFFERENCE</h2>
-      <ul class="diff-list">
-        <li class="reveal reveal-delay-1">
-          <div class="diff-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
-          <div><h4>Fit-First Evaluation</h4><p>We let film, GPA, and goals tell us where a player belongs — not where they think they should be. Honest evaluations build real futures.</p></div>
-        </li>
-        <li class="reveal reveal-delay-2">
-          <div class="diff-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-          <div><h4>Hybrid Recruiting Network</h4><p>Internal advisors combined with 3rd-party recruiters to expand athlete reach far beyond our personal connections.</p></div>
-        </li>
-        <li class="reveal reveal-delay-3">
-          <div class="diff-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg></div>
-          <div><h4>PR Preparation</h4><p>Athletes learn to represent themselves professionally through media training, social branding, and interview coaching — skills that last beyond basketball.</p></div>
-        </li>
-        <li class="reveal reveal-delay-4">
-          <div class="diff-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
-          <div><h4>Full Transparency</h4><p>Every athlete's progress is tracked — coach contacts, film views, offer status. You always know where you stand and what's next.</p></div>
-        </li>
-      </ul>
-    </div>
-    <div class="diff-right reveal reveal-delay-2">
-      <p class="diff-quote">We are committed to developing accountable, resilient young men and women while helping families understand every viable pathway within the game — on and off the court.</p>
-      <div class="diff-quote-attr">Courtside Connections Mission</div>
-    </div>
-  </div>
-</section>
-
-<!-- GUARANTEE -->
-<section class="guarantee">
-  <div class="guarantee-inner">
-    <div class="section-label reveal" style="justify-content:center;">Our Commitment</div>
-    <h2 class="reveal reveal-delay-1">WHAT WE <span>GUARANTEE</span></h2>
-    <p class="guarantee-text reveal reveal-delay-2">We do not guarantee offers or scholarships — but we do guarantee consistent communication, education, structure, and strategic guidance. We will put more coaches' eyes on your athlete than were there before.</p>
-    <a href="#contact" class="btn-primary reveal reveal-delay-3">Start With a Free Evaluation</a>
-    <div class="guarantee-items reveal reveal-delay-4">
-      <div class="guarantee-item"><span class="guarantee-item-num">6</span><span class="guarantee-item-label">College Pathways<br>We Navigate</span></div>
-      <div class="guarantee-item"><span class="guarantee-item-num">2×</span><span class="guarantee-item-label">Weekly Check-ins<br>(Elite Members)</span></div>
-      <div class="guarantee-item"><span class="guarantee-item-num">100%</span><span class="guarantee-item-label">Hands-On<br>Guidance</span></div>
-      <div class="guarantee-item"><span class="guarantee-item-num">0</span><span class="guarantee-item-label">Mass Emails<br>Sent</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- BOOK A CALL -->
-<section class="book" id="book">
-  <div class="book-inner">
-    <div class="book-header">
-      <div class="section-label reveal">Schedule</div>
-      <h2 class="reveal reveal-delay-1">BOOK A <span>FREE CALL</span></h2>
-    </div>
-    <div class="book-layout">
-      <div class="book-left reveal">
-        <p>No pressure, no sales pitch. Just a real conversation about your athlete's situation, goals, and where the 3% Pathway can take them.</p>
-        <ul class="book-perks">
-          <li>30-minute call with a recruiting advisor</li>
-          <li>Honest feedback on your athlete's current level</li>
-          <li>Overview of realistic college pathways</li>
-          <li>Answers to every question you have</li>
-          <li>No obligation to sign up</li>
-        </ul>
-      </div>
-      <div class="calendly-embed reveal reveal-delay-1">
-        <div class="calendly-placeholder-title">Pick a Time That Works</div>
-        <p class="calendly-placeholder-sub">Choose a 30-minute slot and we'll confirm shortly. Athlete and parent/guardian are both encouraged to join.</p>
-        <a href="https://calendly.com/courtsideconnectionsnetwork/30min" target="_blank" class="calendly-btn">Open Scheduling Calendar</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT FORM -->
-<section class="cta-section" id="contact">
-  <div class="cta-bg"></div>
-  <div class="cta-inner">
-    <div class="section-label reveal" style="justify-content:center;">Get Started</div>
-    <h2 class="reveal reveal-delay-1">READY TO<br><span>FIND YOUR FIT?</span></h2>
-    <p class="reveal reveal-delay-2">Start with a free evaluation. No pressure, no hype — just honest answers about where your athlete can thrive on and off the court.</p>
-
-    <form class="form-wrap reveal reveal-delay-3" id="evalForm"
-          action="https://formspree.io/f/mnjozglw" method="POST">
-      <div class="form-row">
-        <div class="form-group"><label>Athlete First Name</label><input type="text" name="athlete_first" placeholder="First name" required /></div>
-        <div class="form-group"><label>Athlete Last Name</label><input type="text" name="athlete_last" placeholder="Last name" required /></div>
-      </div>
-      <div class="form-row">
-        <div class="form-group"><label>Parent / Guardian Name</label><input type="text" name="parent_name" placeholder="Parent or guardian" /></div>
-        <div class="form-group"><label>Contact Email</label><input type="email" name="email" placeholder="your@email.com" required /></div>
+    <div class="section-title" style="font-size:1rem;margin-bottom:1rem;">Current Testimonials</div>
+    <div class="testimonial-list" id="testimonialList"></div>
+    <div class="add-form">
+      <div class="add-form-title">Add New Testimonial</div>
+      <div class="form-group" style="margin-bottom:1rem;">
+        <label>Quote</label>
+        <textarea id="newQuote" placeholder="What did the athlete or parent say?"></textarea>
       </div>
       <div class="form-row">
         <div class="form-group">
-          <label>Grad Year</label>
-          <div class="custom-select" id="selectYear">
-            <div class="custom-select-trigger"><span>Select year</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></div>
-            <div class="custom-select-options">
-              <div class="custom-select-option" data-value="2025">2025</div>
-              <div class="custom-select-option" data-value="2026">2026</div>
-              <div class="custom-select-option" data-value="2027">2027</div>
-              <div class="custom-select-option" data-value="2028">2028</div>
-              <div class="custom-select-option" data-value="2029">2029</div>
-            </div>
-          </div>
-          <input type="hidden" name="grad_year" id="gradYearVal" />
+          <label>Name</label>
+          <input type="text" id="newName" placeholder="e.g. Marcus T." />
         </div>
         <div class="form-group">
-          <label>Package Interest</label>
-          <div class="custom-select" id="selectPackage">
-            <div class="custom-select-trigger"><span>Select package</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></div>
-            <div class="custom-select-options">
-              <div class="custom-select-option" data-value="foundation">Foundation Tier</div>
-              <div class="custom-select-option" data-value="pro">Courtside Pro</div>
-              <div class="custom-select-option" data-value="elite">Courtside Elite</div>
-              <div class="custom-select-option" data-value="unsure">Not sure yet</div>
-            </div>
-          </div>
-          <input type="hidden" name="package_interest" id="packageVal" />
+          <label>Role / Title</label>
+          <input type="text" id="newRole" placeholder="e.g. Guard · Committed D2 — Class of 2025" />
         </div>
       </div>
-      <div class="form-row">
-        <div class="form-group"><label>Film Link (Hudl, YouTube, etc.)</label><input type="url" name="film_link" placeholder="https://hudl.com/..." /></div>
-        <div class="form-group"><label>Phone Number</label><input type="tel" name="phone" placeholder="(555) 000-0000" /></div>
-      </div>
-      <div class="form-group" style="margin-top:.2rem;">
-        <label>Anything else we should know?</label>
-        <textarea name="message" placeholder="Current school, position, GPA, recruiting situation..."></textarea>
-      </div>
-      <button type="submit" class="form-submit">Submit for Free Evaluation</button>
-      <p class="form-note">Our team will review your submission and reach out within 48 hours.</p>
-    </form>
-
-    <div class="form-success" id="formSuccess">
-      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg>
-      <h3>Evaluation Request Sent</h3>
-      <p>We've received your submission and will be in touch within 48 hours. Talk soon.</p>
+      <button class="add-btn" onclick="addTestimonial()">+ Add Testimonial</button>
+      <div class="save-status" id="addStatus"></div>
     </div>
   </div>
-</section>
-
-<!-- FAQ -->
-<section class="faq" id="faq">
-  <div class="faq-inner">
-    <div class="faq-header">
-      <div class="section-label reveal">FAQ</div>
-      <h2 class="reveal reveal-delay-1">QUESTIONS<br><span>ANSWERED</span></h2>
-    </div>
-    <div class="faq-item reveal">
-      <button class="faq-question"><span class="faq-question-text">How is Courtside Connections different from other recruiting services?</span><span class="faq-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
-      <div class="faq-answer"><div class="faq-answer-inner">Most services send mass emails to hundreds of coaches and call it recruiting. We do the opposite — we evaluate your athlete first, identify programs that are a genuine fit, and make targeted, personal outreach. We also provide mentorship, PR training, and consistent check-ins. We are smaller by design because that is what actually gets results.</div></div>
-    </div>
-    <div class="faq-item reveal">
-      <button class="faq-question"><span class="faq-question-text">Do you guarantee a scholarship or offer?</span><span class="faq-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
-      <div class="faq-answer"><div class="faq-answer-inner">No — and any service that guarantees an offer is not being honest with you. What we guarantee is consistent communication, strategic guidance, and real exposure to coaches who match your evaluation. Results depend on the athlete's development and fit, but we work hard to put more coaches' eyes on your player than were there before.</div></div>
-    </div>
-    <div class="faq-item reveal">
-      <button class="faq-question"><span class="faq-question-text">What if my kid doesn't get an offer during the program?</span><span class="faq-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
-      <div class="faq-answer"><div class="faq-answer-inner">Recruiting timelines vary significantly. If the program ends without a commitment, we provide a full debrief — what happened, what we'd do differently, and what next steps look like including student assistant and manager opportunities, reserve team and walk-on options. We don't disappear when things get hard.</div></div>
-    </div>
-    <div class="faq-item reveal">
-      <button class="faq-question"><span class="faq-question-text">What levels do you work with?</span><span class="faq-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
-      <div class="faq-answer"><div class="faq-answer-inner">We work across all levels — NCAA D1, D2, and D3, NAIA, JUCO (D1, D2, D3), NCCAA, and USCAA. We also help athletes find preferred walk-on and student assistant opportunities. Our specialty is our deep root connections with all levels of college basketball and the hands-on relationships we've built.</div></div>
-    </div>
-    <div class="faq-item reveal">
-      <button class="faq-question"><span class="faq-question-text">When should we start the process?</span><span class="faq-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
-      <div class="faq-answer"><div class="faq-answer-inner">As early as 7th grade. The earlier we start, the more runway we have to build relationships and put your athlete in front of the right coaches. We have helped athletes at every stage — middle school through senior year. It is never too early to start building your pathway.</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-top">
-    <div>
-      <div class="footer-logo">Courtside Connections</div>
-      <div class="footer-tagline">The 3% Pathway</div>
-    </div>
-    <div class="footer-links">
-      <a href="#why">Why Us</a>
-      <a href="#how">Process</a>
-      <a href="#packages">Packages</a>
-      <a href="#testimonials">Stories</a>
-      <a href="#team">Team</a>
-      <a href="#book">Book a Call</a>
-      <a href="#faq">FAQ</a>
-      <a href="#contact">Get Started</a>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <div class="footer-copy">© 2025 Courtside Connections. All rights reserved.</div>
-    <div class="footer-social">
-      <a href="#" title="Instagram">IG</a>
-      <a href="#" title="Twitter / X">X</a>
-      <a href="#" title="TikTok">TK</a>
-      <a href="#" title="Facebook">FB</a>
-    </div>
-  </div>
-</footer>
+</div>
 
 <script>
-/* TESTIMONIALS — load from R2 */
+// ── CONFIG — no secrets here, all uploads go through the Worker ──────────
+const WORKER_URL  = 'https://courtside-admin-proxy.nextgentutoringco.workers.dev';
 const PUBLIC_BASE = 'https://pub-46eb07043bde45b5bfaef6823f5f5def.r2.dev';
+const ADMIN_PASSWORD = 'courtside2026';
+
+const TEAM = [
+  { key:'khyle',   initials:'KH', name:'Khyle',   role:'Chief Recruiting Officer & Co-Founder' },
+  { key:'justin',  initials:'JU', name:'Justin',  role:'Chief Recruiting Officer & Co-Founder' },
+  { key:'spencer', initials:'SP', name:'Spencer', role:'Director of Operations & Co-Founder' },
+  { key:'cortney', initials:'CT', name:'Cortney', role:'Director of PR & Athlete Media' },
+  { key:'craig',   initials:'CG', name:'Craig',   role:'Regional Director' },
+  { key:'jerome',  initials:'JR', name:'Jerome',  role:'Regional Director' },
+  { key:'aysia',   initials:'AY', name:'Aysia',   role:'Chief Finance Officer' },
+  { key:'taeron',  initials:'TR', name:'Taeron',  role:'Regional Director' },
+];
+
 const DEFAULT_TESTIMONIALS = [
   { id:'t1', quote:"Courtside Connections didn't just find me schools — they found me the right school. They were honest with me from day one, and that honesty is what got me to the next level.", name:"Marcus T.", role:"Guard · Committed D2 — Class of 2024" },
   { id:'t2', quote:"As a parent I was completely lost in this process. The team walked us through every step, answered every question, and made sure my son had a real plan. Worth every dollar.", name:"Denise W.", role:"Parent of Elite Member" },
   { id:'t3', quote:"I came in thinking I was a D1 player. They showed me where I really fit and helped me land at a school where I actually start and thrive. Best decision I ever made.", name:"Jaylen R.", role:"Forward · NAIA Commit — Class of 2025" },
 ];
-(async function loadTestimonials() {
-  let list;
+
+let testimonials = [];
+let unsavedChanges = false;
+let adminPassword = '';
+
+function login() {
+  const val = document.getElementById('passwordInput').value;
+  if (val === ADMIN_PASSWORD) {
+    adminPassword = val;
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('adminScreen').style.display = 'block';
+    buildGrid();
+    loadTestimonials();
+  } else {
+    document.getElementById('loginError').style.display = 'block';
+  }
+}
+function logout() {
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('adminScreen').style.display = 'none';
+  document.getElementById('passwordInput').value = '';
+  adminPassword = '';
+}
+
+function switchTab(name) {
+  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', ['headshots','testimonials'][i] === name));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+}
+
+// ── HEADSHOTS ─────────────────────────────────────────────────────────────
+function buildGrid() {
+  const grid = document.getElementById('teamGrid');
+  grid.innerHTML = '';
+  TEAM.forEach(m => {
+    const card = document.createElement('div');
+    card.className = 'member-card';
+    card.innerHTML = `
+      <div class="member-photo">
+        <img id="img-${m.key}" src="${PUBLIC_BASE}/${m.key}.jpg?t=${Date.now()}" alt="${m.name}"
+             onload="this.style.display='block';document.getElementById('init-${m.key}').style.display='none';"
+             onerror="this.style.display='none';" />
+        <span class="member-initials-display" id="init-${m.key}">${m.initials}</span>
+      </div>
+      <div class="member-name">${m.name}</div>
+      <div class="member-role">${m.role}</div>
+      <label class="upload-btn">
+        Upload Photo
+        <input type="file" accept="image/jpeg,image/png,image/webp" onchange="handleUpload(event,'${m.key}')" />
+      </label>
+      <div class="progress-wrap" id="prog-wrap-${m.key}"><div class="progress-bar" id="prog-${m.key}"></div></div>
+      <div class="member-status" id="status-${m.key}"></div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+async function handleUpload(event, key) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const statusEl = document.getElementById(`status-${key}`);
+  const progWrap = document.getElementById(`prog-wrap-${key}`);
+  const progBar  = document.getElementById(`prog-${key}`);
+  statusEl.textContent = 'Uploading…';
+  statusEl.className   = 'member-status uploading';
+  progWrap.style.display = 'block';
+  progBar.style.width    = '0%';
+  let pct = 0;
+  const tick = setInterval(() => { pct = Math.min(pct + Math.random() * 12, 88); progBar.style.width = pct + '%'; }, 200);
+  try {
+    // Upload via Worker — no token exposed in this file
+    const res = await fetch(`${WORKER_URL}/upload/${key}.jpg`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': file.type || 'image/jpeg',
+        'X-Admin-Password': adminPassword,
+      },
+      body: file,
+    });
+    clearInterval(tick);
+    if (res.ok) {
+      progBar.style.width = '100%';
+      statusEl.textContent = '✓ Uploaded!';
+      statusEl.className   = 'member-status success';
+      const img  = document.getElementById(`img-${key}`);
+      const init = document.getElementById(`init-${key}`);
+      img.onload = () => { img.style.display = 'block'; init.style.display = 'none'; };
+      img.onerror = () => {};
+      img.src = `${PUBLIC_BASE}/${key}.jpg?t=${Date.now()}`;
+      setTimeout(() => { progWrap.style.display = 'none'; progBar.style.width = '0%'; }, 2000);
+    } else { throw new Error(`HTTP ${res.status}`); }
+  } catch(err) {
+    clearInterval(tick);
+    progWrap.style.display = 'none';
+    statusEl.textContent = '✗ Upload failed — try again';
+    statusEl.className   = 'member-status error';
+  }
+}
+
+// ── TESTIMONIALS ──────────────────────────────────────────────────────────
+async function loadTestimonials() {
   try {
     const res = await fetch(`${PUBLIC_BASE}/testimonials.json?t=${Date.now()}`);
-    list = res.ok ? await res.json() : DEFAULT_TESTIMONIALS;
-  } catch { list = DEFAULT_TESTIMONIALS; }
-  const grid = document.getElementById('testimonialsGrid');
-  const note = document.getElementById('testimonialsNote');
-  const delays = ['','reveal-delay-1','reveal-delay-2','reveal-delay-3','reveal-delay-4'];
-  grid.innerHTML = list.map((t,i) => `
-    <div class="testimonial-card reveal ${delays[i % delays.length]}">
-      <span class="testimonial-quote-mark">"</span>
-      <p class="testimonial-text">${t.quote}</p>
-      <div class="testimonial-divider"></div>
-      <div class="testimonial-name">${t.name}</div>
-      <div class="testimonial-role">${t.role}</div>
+    testimonials = res.ok ? await res.json() : [...DEFAULT_TESTIMONIALS];
+  } catch { testimonials = [...DEFAULT_TESTIMONIALS]; }
+  renderTestimonials();
+}
+
+function renderTestimonials() {
+  const list = document.getElementById('testimonialList');
+  if (!testimonials.length) {
+    list.innerHTML = '<div class="empty-state">No testimonials yet. Add one below.</div>';
+    return;
+  }
+  list.innerHTML = testimonials.map(t => `
+    <div class="testimonial-item" id="titem-${t.id}">
+      <div class="testimonial-body">
+        <div class="testimonial-quote-preview">"${escHtml(t.quote)}"</div>
+        <div class="testimonial-meta"><span>${escHtml(t.name)}</span>${escHtml(t.role)}</div>
+      </div>
+      <button class="del-btn" onclick="deleteTestimonial('${t.id}')">✕</button>
     </div>
   `).join('');
-  note.textContent = 'Testimonials are representative examples. Real client stories will be featured as the program grows.';
-  note.className = 'testimonials-note reveal reveal-delay-3';
-  grid.querySelectorAll('.reveal').forEach(el =>
-    new IntersectionObserver(entries => { entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }); },{threshold:.1}).observe(el)
-  );
-})();
-
-function showPhoto(key) {
-  const photo = document.getElementById('tp-' + key);
-  const init  = document.getElementById('ti-' + key);
-  if (photo) photo.style.display = 'block';
-  if (init)  init.style.display  = 'none';
 }
 
-if (window.matchMedia('(pointer:fine)').matches) {
-  const cur = document.getElementById('cursor');
-  const ring = document.getElementById('cursorRing');
-  let mx=0,my=0,rx=0,ry=0;
-  document.addEventListener('mousemove',e=>{
-    mx=e.clientX;my=e.clientY;
-    cur.classList.add('active');
-    ring.style.opacity='1';
-  });
-  (function loop(){cur.style.left=mx+'px';cur.style.top=my+'px';rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);})();
-  document.querySelectorAll('a,button,.package-card,.team-card,.testimonial-card').forEach(el=>{
-    el.addEventListener('mouseenter',()=>{cur.style.width='18px';cur.style.height='18px';ring.style.width='52px';ring.style.height='52px';});
-    el.addEventListener('mouseleave',()=>{cur.style.width='10px';cur.style.height='10px';ring.style.width='36px';ring.style.height='36px';});
-  });
+function addTestimonial() {
+  const quote = document.getElementById('newQuote').value.trim();
+  const name  = document.getElementById('newName').value.trim();
+  const role  = document.getElementById('newRole').value.trim();
+  const stat  = document.getElementById('addStatus');
+  if (!quote || !name || !role) {
+    stat.textContent = 'Please fill in all three fields.';
+    stat.className = 'save-status error';
+    return;
+  }
+  testimonials.push({ id: 't' + Date.now(), quote, name, role });
+  document.getElementById('newQuote').value = '';
+  document.getElementById('newName').value  = '';
+  document.getElementById('newRole').value  = '';
+  stat.textContent = 'Added! Click "Publish to Site" to make it live.';
+  stat.className = 'save-status success';
+  renderTestimonials();
+  markUnsaved();
+  setTimeout(() => { stat.textContent = ''; }, 4000);
 }
 
-const nav=document.getElementById('mainNav');
-window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>60));
+function deleteTestimonial(id) {
+  if (!confirm('Remove this testimonial?')) return;
+  testimonials = testimonials.filter(t => t.id !== id);
+  renderTestimonials();
+  markUnsaved();
+}
 
-const burger=document.getElementById('burger');
-const mob=document.getElementById('mobileMenu');
-burger.addEventListener('click',()=>{burger.classList.toggle('open');mob.classList.toggle('open');document.body.style.overflow=mob.classList.contains('open')?'hidden':'';});
-function closeMobile(){burger.classList.remove('open');mob.classList.remove('open');document.body.style.overflow='';}
+function markUnsaved() {
+  unsavedChanges = true;
+  document.getElementById('publishBar').style.display = 'flex';
+}
 
-new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:.1})
-  .observe && document.querySelectorAll('.reveal').forEach(el=>
-    new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:.1}).observe(el));
+async function publishTestimonials() {
+  const btn = document.getElementById('publishBtn');
+  btn.textContent = 'Publishing…';
+  btn.disabled = true;
+  try {
+    const json = JSON.stringify(testimonials, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    // Also goes through Worker
+    const res = await fetch(`${WORKER_URL}/upload/testimonials.json`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Admin-Password': adminPassword,
+      },
+      body: blob,
+    });
+    if (res.ok) {
+      btn.textContent = '✓ Published!';
+      setTimeout(() => {
+        document.getElementById('publishBar').style.display = 'none';
+        btn.textContent = 'Publish to Site';
+        btn.disabled = false;
+        unsavedChanges = false;
+      }, 2500);
+    } else { throw new Error(`HTTP ${res.status}`); }
+  } catch(err) {
+    btn.textContent = '✗ Failed — try again';
+    btn.disabled = false;
+    setTimeout(() => { btn.textContent = 'Publish to Site'; }, 3000);
+  }
+}
 
-document.querySelectorAll('.custom-select').forEach(sel=>{
-  const trig=sel.querySelector('.custom-select-trigger');
-  const opts=sel.querySelectorAll('.custom-select-option');
-  const lbl=trig.querySelector('span');
-  const hidden=sel.id==='selectYear'?document.getElementById('gradYearVal'):document.getElementById('packageVal');
-  trig.addEventListener('click',()=>{document.querySelectorAll('.custom-select.open').forEach(s=>{if(s!==sel)s.classList.remove('open');});sel.classList.toggle('open');});
-  opts.forEach(o=>o.addEventListener('click',()=>{lbl.textContent=o.textContent;trig.classList.add('selected');opts.forEach(x=>x.classList.remove('selected'));o.classList.add('selected');if(hidden)hidden.value=o.dataset.value;sel.classList.remove('open');}));
-});
-document.addEventListener('click',e=>{if(!e.target.closest('.custom-select'))document.querySelectorAll('.custom-select.open').forEach(s=>s.classList.remove('open'));});
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
 
-const form=document.getElementById('evalForm');
-const succ=document.getElementById('formSuccess');
-form.addEventListener('submit',async e=>{
-  e.preventDefault();
-  const btn=form.querySelector('.form-submit');
-  btn.textContent='Sending...';btn.disabled=true;
-  try{
-    const r=await fetch(form.action,{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}});
-    if(r.ok){form.style.display='none';succ.style.display='block';if(typeof gtag==='function')gtag('event','form_submit',{event_category:'evaluation',event_label:'free_eval'});}
-    else{btn.textContent='Error — Try Again';btn.disabled=false;}
-  }catch{btn.textContent='Error — Try Again';btn.disabled=false;}
-});
-
-const floatBtn=document.getElementById('floatBtn');
-const hideZones=['book','contact'];
-const floatObs=new IntersectionObserver(entries=>{
-  const anyVisible=hideZones.some(id=>{const el=document.getElementById(id);if(!el)return false;const r=el.getBoundingClientRect();return r.top<window.innerHeight&&r.bottom>0;});
-  floatBtn.classList.toggle('hidden',anyVisible);
-},{threshold:0.1});
-hideZones.forEach(id=>{const el=document.getElementById(id);if(el)floatObs.observe(el);});
-
-document.querySelectorAll('.faq-question').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    const item=btn.closest('.faq-item');
-    const open=item.classList.contains('open');
-    document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));
-    if(!open)item.classList.add('open');
-  });
+window.addEventListener('beforeunload', e => {
+  if (unsavedChanges) { e.preventDefault(); e.returnValue = ''; }
 });
 </script>
 </body>
