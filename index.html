@@ -43,8 +43,26 @@ body{background:var(--page-bg);color:var(--page-text);font-family:'DM Sans',sans
 
 /* FULL PAGE VIDEO */
 .page-video-wrap{position:fixed;inset:0;z-index:-1;pointer-events:none;}
-.page-video{width:100%;height:100%;object-fit:cover;display:block;opacity:.07;}
-.page-video-overlay{position:absolute;inset:0;background:var(--page-bg);opacity:.93;}
+.page-video{width:100%;height:100%;object-fit:cover;display:block;}
+.page-video-overlay{position:absolute;inset:0;background:rgba(10,17,40,.78);}
+
+/* Hero sits on top of the fixed video — needs dark overlay of its own */
+.hero{background:transparent;}
+.hero-grid{position:absolute;inset:0;z-index:1;background-image:linear-gradient(rgba(26,58,107,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(26,58,107,.06) 1px,transparent 1px);background-size:80px 80px;mask-image:linear-gradient(to bottom,transparent 0%,black 30%,black 70%,transparent 100%);}
+
+/* All page sections get a semi-transparent bg so video peeks through */
+.problem{background:rgba(245,248,232,.88);}
+.how{background:rgba(10,17,40,.92);}
+.packages{background:rgba(245,248,232,.88);}
+.testimonials{background:rgba(15,23,48,.92);}
+.team{background:rgba(245,248,232,.88);}
+.difference{background:rgba(245,248,232,.88);}
+.guarantee{background:rgba(10,17,40,.92);}
+.book{background:rgba(245,248,232,.88);}
+.cta-section{background:rgba(245,248,232,.88);}
+.faq{background:rgba(232,236,220,.9);}
+.marquee-wrap{background:rgba(245,248,232,.88);}
+footer{background:rgba(10,17,40,.95);}
 
 @media(pointer:coarse){.cursor,.cursor-ring{display:none;}body{cursor:auto;}}
 @media(pointer:fine){body{cursor:none;}}
@@ -74,10 +92,7 @@ nav.scrolled .nav-burger span{background:var(--navy);}
 .mobile-menu-close{position:absolute;top:1.5rem;right:1.5rem;background:none;border:1px solid rgba(245,248,232,.3);color:var(--cream);width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.4rem;transition:background .2s,border-color .2s;}
 .mobile-menu-close:hover{background:rgba(245,248,232,.1);border-color:rgba(245,248,232,.6);}
 
-.hero{min-height:100vh;display:flex;align-items:flex-end;padding:0 4rem 6rem;position:relative;overflow:hidden;background:#060c1e;}
-.hero-video-wrap{position:absolute;inset:0;z-index:0;}
-.hero-video{width:100%;height:100%;object-fit:cover;display:block;}
-.hero-video-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(6,12,30,.82) 0%,rgba(10,17,40,.68) 40%,rgba(15,23,48,.55) 100%);}
+.hero{min-height:100vh;display:flex;align-items:flex-end;padding:0 4rem 6rem;position:relative;overflow:hidden;background:transparent;}
 .hero-grid{position:absolute;inset:0;z-index:1;background-image:linear-gradient(rgba(26,58,107,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(26,58,107,.04) 1px,transparent 1px);background-size:80px 80px;mask-image:linear-gradient(to bottom,transparent 0%,black 30%,black 70%,transparent 100%);}
 .hero-accent{position:absolute;top:18%;right:8%;width:420px;height:420px;border:1px solid rgba(26,58,107,.18);border-radius:50%;animation:spin 30s linear infinite;z-index:2;}
 .hero-accent::before{content:'';position:absolute;inset:30px;border:1px solid rgba(26,58,107,.07);border-radius:50%;}
@@ -408,13 +423,6 @@ footer{background:var(--navy);border-top:1px solid var(--border);padding:3rem 4r
 
 <!-- HERO -->
 <section class="hero" id="home">
-  <!-- VIDEO BACKGROUND -->
-  <div class="hero-video-wrap">
-    <video class="hero-video" autoplay muted loop playsinline preload="auto">
-      <source src="https://pub-46eb07043bde45b5bfaef6823f5f5def.r2.dev/REEL.mp4" type="video/mp4">
-    </video>
-    <div class="hero-video-overlay"></div>
-  </div>
   <div class="hero-grid"></div>
   <div class="hero-accent"></div>
   <div class="hero-stat">
